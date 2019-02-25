@@ -32,11 +32,18 @@ public class Vets {
 
     private List<Vet> vets;
 
+    // For testing
+    public Vets(List<Vet> list) {
+        this.vets = list;
+    }
+
+    // Legacy
+    public Vets() {
+        this(new ArrayList<>());
+    }
+
     @XmlElement
     public List<Vet> getVetList() {
-        if (vets == null) {
-            vets = new ArrayList<>();
-        }
         return vets;
     }
 
