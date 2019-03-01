@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.util.SerializationUtils;
 
     @RunWith(MockitoJUnitRunner.class)
     public class PersonTest {
@@ -30,5 +32,14 @@ import static org.junit.Assert.assertEquals;
 
         person.setFirstName("John");
         assertEquals(person.getFirstName(), "John");
-    } 
-}
+    }
+
+    @Test
+    public void testSerialization() {
+            Person test = new Person();
+            test.setId(8456207);
+
+            Person test2 = (Person) SerializationUtils.deserialize(SerializationUtils.serialize(test));
+            assertThat(test2.getId()).isEqualTo(test.getId());
+        }
+    }
