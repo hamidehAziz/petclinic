@@ -4,13 +4,12 @@ import org.junit.Test;
 import org.junit.Before;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
-
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
-public class PersonTest {
+    @RunWith(MockitoJUnitRunner.class)
+    public class PersonTest {
 
-    private Person person;
+        private Person person;
 
     @Before
     public void setup() {
