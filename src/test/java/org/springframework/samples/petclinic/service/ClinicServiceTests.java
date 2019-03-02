@@ -16,12 +16,16 @@
 
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.samples.petclinic.owner.Owner;
@@ -36,8 +40,6 @@ import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * Integration test of the Service and the Repository layer.
  * <p>
@@ -50,7 +52,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we
  * don't need to perform application context lookups. See the use of
  * {@link Autowired @Autowired} on the <code>{@link
- * ClinicServiceTests#clinicService clinicService}</code> instance variable, which uses
+ * ClinicServiceTests# clinicService clinicService}</code> instance variable, which uses
  * autowiring <em>by type</em>.
  * <li><strong>Transaction management</strong>, meaning each test method is executed in
  * its own transaction, which is automatically rolled back by default. Thus, even if tests
@@ -95,7 +97,7 @@ public class ClinicServiceTests {
 
     @Test
     public void shouldFindSingleOwnerWithPet() {
-        Owner owner = this.owners.findById(1);
+        Owner owner = givenIdReturnOwner(1);
         assertThat(owner.getLastName()).startsWith("Franklin");
         assertThat(owner.getPets().size()).isEqualTo(1);
         assertThat(owner.getPets().get(0).getType()).isNotNull();
@@ -124,7 +126,7 @@ public class ClinicServiceTests {
     @Test
     @Transactional
     public void shouldUpdateOwner() {
-        Owner owner = this.owners.findById(1);
+        Owner owner = givenIdReturnOwner(1);
         String oldLastName = owner.getLastName();
         String newLastName = oldLastName + "X";
 
@@ -132,13 +134,13 @@ public class ClinicServiceTests {
         this.owners.save(owner);
 
         // retrieving new name from database
-        owner = this.owners.findById(1);
+        owner = givenIdReturnOwner(1);
         assertThat(owner.getLastName()).isEqualTo(newLastName);
     }
 
     @Test
     public void shouldFindPetWithCorrectId() {
-        Pet pet7 = this.pets.findById(7);
+        Pet pet7 = givenIdReturnPet(7);
         assertThat(pet7.getName()).startsWith("Samantha");
         assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
 
@@ -157,7 +159,7 @@ public class ClinicServiceTests {
     @Test
     @Transactional
     public void shouldInsertPetIntoDatabaseAndGenerateId() {
-        Owner owner6 = this.owners.findById(6);
+        Owner owner6 = givenIdReturnOwner(6);
         int found = owner6.getPets().size();
 
         Pet pet = new Pet();
@@ -171,7 +173,7 @@ public class ClinicServiceTests {
         this.pets.save(pet);
         this.owners.save(owner6);
 
-        owner6 = this.owners.findById(6);
+        owner6 = givenIdReturnOwner(6);
         assertThat(owner6.getPets().size()).isEqualTo(found + 1);
         // checks that id has been generated
         assertThat(pet.getId()).isNotNull();
@@ -179,15 +181,15 @@ public class ClinicServiceTests {
 
     @Test
     @Transactional
-    public void shouldUpdatePetName() throws Exception {
-        Pet pet7 = this.pets.findById(7);
+    public void shouldUpdatePetName() throws EntityNotFoundException {
+        Pet pet7 = givenIdReturnPet(7);
         String oldName = pet7.getName();
 
         String newName = oldName + "X";
         pet7.setName(newName);
         this.pets.save(pet7);
 
-        pet7 = this.pets.findById(7);
+        pet7 = givenIdReturnPet(7);
         assertThat(pet7.getName()).isEqualTo(newName);
     }
 
@@ -205,7 +207,7 @@ public class ClinicServiceTests {
     @Test
     @Transactional
     public void shouldAddNewVisitForPet() {
-        Pet pet7 = this.pets.findById(7);
+        Pet pet7 = givenIdReturnPet(7);
         int found = pet7.getVisits().size();
         Visit visit = new Visit();
         pet7.addVisit(visit);
@@ -213,7 +215,7 @@ public class ClinicServiceTests {
         this.visits.save(visit);
         this.pets.save(pet7);
 
-        pet7 = this.pets.findById(7);
+        pet7 = givenIdReturnPet(7);
         assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
         assertThat(visit.getId()).isNotNull();
     }
@@ -225,6 +227,15 @@ public class ClinicServiceTests {
         Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
         assertThat(visitArr[0].getDate()).isNotNull();
         assertThat(visitArr[0].getPetId()).isEqualTo(7);
+    }
+
+    private Pet givenIdReturnPet(int id){
+        return this.pets.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("pet with id={0} not found", id)));
+    }
+
+    private Owner givenIdReturnOwner(int id){
+        return this.owners.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("owner with id={0} not found", id)));
+
     }
 
 }

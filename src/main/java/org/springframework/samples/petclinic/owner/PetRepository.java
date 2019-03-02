@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -46,7 +47,7 @@ public interface PetRepository extends Repository<Pet, Integer> {
      * @return the {@link Pet} if found
      */
     @Transactional(readOnly = true)
-    Pet findById(Integer id);
+    Optional<Pet> findById(Integer id);
 
     /**
      * Save a {@link Pet} to the data store, either inserting or updating it.

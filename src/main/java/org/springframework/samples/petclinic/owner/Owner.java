@@ -85,14 +85,14 @@ public class Owner extends Person {
         this.telephone = telephone;
     }
 
-    protected Set<Pet> getPetsInternal() {
+    public Set<Pet> getPetsInternal() {
         if (this.pets == null) {
             this.pets = new HashSet<>();
         }
         return this.pets;
     }
 
-    protected void setPetsInternal(Set<Pet> pets) {
+    public void setPetsInternal(Set<Pet> pets) {
         this.pets = pets;
     }
 

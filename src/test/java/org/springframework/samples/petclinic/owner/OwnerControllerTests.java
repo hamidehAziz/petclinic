@@ -16,9 +16,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerController;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +34,7 @@ public class OwnerControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private OwnerRepository owners;
+    private OwnerService owners;
 
     private Owner george;
 

@@ -15,15 +15,21 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.visit.VisitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Juergen Hoeller
@@ -35,13 +41,14 @@ import java.util.Map;
 @Controller
 class VisitController {
 
-    private final VisitRepository visits;
-    private final PetRepository pets;
+    private VisitService visitService;
+    private PetService petService;
 
 
-    public VisitController(VisitRepository visits, PetRepository pets) {
-        this.visits = visits;
-        this.pets = pets;
+    @Autowired
+    public VisitController(VisitService visitService, PetService petService) {
+        this.visitService = visitService;
+        this.petService = petService;
     }
 
     @InitBinder
@@ -61,7 +68,7 @@ class VisitController {
      */
     @ModelAttribute("visit")
     public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
-        Pet pet = this.pets.findById(petId);
+        Pet pet = petService.findById(petId);
         model.put("pet", pet);
         Visit visit = new Visit();
         pet.addVisit(visit);
@@ -80,7 +87,7 @@ class VisitController {
         if (result.hasErrors()) {
             return "pets/createOrUpdateVisitForm";
         } else {
-            this.visits.save(visit);
+            visitService.save(visit);
             return "redirect:/owners/{ownerId}";
         }
     }

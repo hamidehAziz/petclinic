@@ -1,12 +1,16 @@
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.newTests;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.petclinic.owner.Pet;
+import org.springframework.samples.petclinic.owner.PetType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnimalOwnerTest {

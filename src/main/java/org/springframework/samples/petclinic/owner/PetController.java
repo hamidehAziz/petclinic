@@ -15,15 +15,22 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.Collection;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Collection;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Juergen Hoeller
@@ -35,22 +42,23 @@ import java.util.Collection;
 class PetController {
 
     private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
-    private final PetRepository pets;
-    private final OwnerRepository owners;
+    private final OwnerService ownerService;
+    private final PetService petService;
 
-    public PetController(PetRepository pets, OwnerRepository owners) {
-        this.pets = pets;
-        this.owners = owners;
+    @Autowired
+    public PetController(PetService petService, OwnerService ownerService) {
+        this.petService = petService;
+        this.ownerService = ownerService;
     }
 
     @ModelAttribute("types")
     public Collection<PetType> populatePetTypes() {
-        return this.pets.findPetTypes();
+        return petService.findPetTypes();
     }
 
     @ModelAttribute("owner")
     public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-        return this.owners.findById(ownerId);
+        return ownerService.findById(ownerId);
     }
 
     @InitBinder("owner")
@@ -81,14 +89,14 @@ class PetController {
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-            this.pets.save(pet);
+            petService.save(pet);
             return "redirect:/owners/{ownerId}";
         }
     }
 
     @GetMapping("/pets/{petId}/edit")
     public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
-        Pet pet = this.pets.findById(petId);
+        Pet pet = petService.findById(petId);
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
@@ -101,7 +109,7 @@ class PetController {
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
             owner.addPet(pet);
-            this.pets.save(pet);
+            petService.save(pet);
             return "redirect:/owners/{ownerId}";
         }
     }

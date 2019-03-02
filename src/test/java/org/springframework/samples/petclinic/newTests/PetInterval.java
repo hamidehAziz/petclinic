@@ -1,12 +1,17 @@
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.newTests;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.*;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.mock;
-import static org.junit.Assert.assertEquals;
+import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.petclinic.owner.Pet;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PetInterval {
