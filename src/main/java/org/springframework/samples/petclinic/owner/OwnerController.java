@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.datatransfer.owner.OwnerRepositoryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +43,9 @@ class OwnerController {
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
 
+    @Autowired
+    private OwnerRepositoryImpl ownerRepository;
+
 
     public OwnerController(OwnerRepository clinicService) {
         this.owners = clinicService;
@@ -64,6 +69,7 @@ class OwnerController {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             this.owners.save(owner);
+            //this.ownerRepository.save(owner);
             return "redirect:/owners/" + owner.getId();
         }
     }
@@ -83,18 +89,20 @@ class OwnerController {
         }
 
         // find owners by last name
-        Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
-        if (results.isEmpty()) {
+        //Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+        Collection<Owner> res2 = this.ownerRepository.findByLastName(owner.getLastName());
+        if (res2.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";
-        } else if (results.size() == 1) {
+        } else if (res2.size() == 1) {
             // 1 owner found
-            owner = results.iterator().next();
+            //owner = results.iterator().next();
+            owner = res2.iterator().next();
             return "redirect:/owners/" + owner.getId();
         } else {
             // multiple owners found
-            model.put("selections", results);
+            model.put("selections", res2);
             return "owners/ownersList";
         }
     }
@@ -113,6 +121,7 @@ class OwnerController {
         } else {
             owner.setId(ownerId);
             this.owners.save(owner);
+            this.ownerRepository.save(owner);
             return "redirect:/owners/{ownerId}";
         }
     }
