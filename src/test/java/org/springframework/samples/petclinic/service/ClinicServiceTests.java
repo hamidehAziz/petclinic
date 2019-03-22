@@ -16,22 +16,15 @@
 
 package org.springframework.samples.petclinic.service;
 
-import javafx.application.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.PetClinicApplication;
-import org.springframework.samples.petclinic.config.H2TestProfileJpaConfig;
-import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.mysql.domain.*;
 import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +64,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
 @DataJpaTest
 public class ClinicServiceTests {
 
