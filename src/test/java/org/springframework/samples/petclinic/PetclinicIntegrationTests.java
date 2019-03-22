@@ -18,10 +18,9 @@ package org.springframework.samples.petclinic;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.vet.VetRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -29,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class PetclinicIntegrationTests {
 
     @Autowired
-    private VetRepository vets;
+    private MysqlVetRepository vets;
 
     @Test
     public void testFindAll() throws Exception {

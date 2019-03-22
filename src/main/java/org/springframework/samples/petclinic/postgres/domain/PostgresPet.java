@@ -13,30 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+package org.springframework.samples.petclinic.postgres.domain;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
-import org.springframework.samples.petclinic.visit.Visit;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Simple business object representing a pet.
@@ -46,8 +32,8 @@ import org.springframework.samples.petclinic.visit.Visit;
  * @author Sam Brannen
  */
 @Entity
-@Table(name = "pets")
-public class Pet extends NamedEntity {
+@Table(name = "postgres_pets")
+public class PostgresPet extends NamedEntity {
 
     @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -55,14 +41,14 @@ public class Pet extends NamedEntity {
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private PetType type;
+    private PostgresPetType type;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private PostgresOwner owner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "petId", fetch = FetchType.EAGER)
-    private Set<Visit> visits = new LinkedHashSet<>();
+    private Set<PostgresVisit> visits = new LinkedHashSet<>();
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
@@ -72,41 +58,41 @@ public class Pet extends NamedEntity {
         return this.birthDate;
     }
 
-    public PetType getType() {
+    public PostgresPetType getType() {
         return this.type;
     }
 
-    public void setType(PetType type) {
+    public void setType(PostgresPetType type) {
         this.type = type;
     }
 
-    public Owner getOwner() {
+    public PostgresOwner getOwner() {
         return this.owner;
     }
 
-    protected void setOwner(Owner owner) {
+    public void setOwner(PostgresOwner owner) {
         this.owner = owner;
     }
 
-    protected Set<Visit> getVisitsInternal() {
+    protected Set<PostgresVisit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<>();
         }
         return this.visits;
     }
 
-    protected void setVisitsInternal(Set<Visit> visits) {
+    protected void setVisitsInternal(Set<PostgresVisit> visits) {
         this.visits = visits;
     }
 
-    public List<Visit> getVisits() {
-        List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
+    public List<PostgresVisit> getVisits() {
+        List<PostgresVisit> sortedVisits = new ArrayList<>(getVisitsInternal());
         PropertyComparator.sort(sortedVisits,
                 new MutableSortDefinition("date", false, false));
         return Collections.unmodifiableList(sortedVisits);
     }
 
-    public void addVisit(Visit visit) {
+    public void addVisit(PostgresVisit visit) {
         getVisitsInternal().add(visit);
         visit.setPetId(this.getId());
     }

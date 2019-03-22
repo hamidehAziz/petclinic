@@ -1,7 +1,9 @@
-package org.springframework.samples.petclinic.system;
+package org.springframework.samples.petclinic.newTests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.springframework.samples.petclinic.system.WelcomeController;
+
 import static org.mockito.Mockito.*;
 
 public class newControllerTest {

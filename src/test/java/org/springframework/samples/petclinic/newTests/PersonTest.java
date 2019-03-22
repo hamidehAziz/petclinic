@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.model;
+package org.springframework.samples.petclinic.newTests;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -6,6 +6,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.SerializationUtils;
 
     @RunWith(MockitoJUnitRunner.class)

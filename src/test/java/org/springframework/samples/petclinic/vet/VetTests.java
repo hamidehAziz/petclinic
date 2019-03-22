@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.vet;
 
 import org.junit.Test;
 
+import org.springframework.samples.petclinic.mysql.domain.Vet;
 import org.springframework.util.SerializationUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+package org.springframework.samples.petclinic.postgres.domain;
 
 import org.springframework.samples.petclinic.model.NamedEntity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
 /**
- * Models a {@link Vet Vet's} specialty (for example, dentistry).
+ * Models a {@link PostgresVet Vet's} specialty (for example, dentistry).
  *
  * @author Juergen Hoeller
  */
 @Entity
-@Table(name = "specialties")
-public class Specialty extends NamedEntity implements Serializable {
+@Table(name = "postgres_specialties")
+public class PostgresSpecialty extends NamedEntity implements Serializable {
 
 }

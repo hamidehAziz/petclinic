@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.controllers;
 
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,14 +39,15 @@ import java.util.Map;
  * @author Michael Isvy
  */
 @Controller
-class OwnerController {
+public class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
-    private final OwnerRepository owners;
+    private final MysqlOwnerRepository owners;
+    private final PostgresOwnerRepository newOwners;
 
-
-    public OwnerController(OwnerRepository clinicService) {
+    public OwnerController(MysqlOwnerRepository clinicService, PostgresOwnerRepository newOwners) {
         this.owners = clinicService;
+        this.newOwners = newOwners;
     }
 
     @InitBinder
@@ -121,7 +125,7 @@ class OwnerController {
      * Custom handler for displaying an owner.
      *
      * @param ownerId the ID of the owner to display
-     * @return a ModelMap with the model attributes for the view
+     * @return a ModelMap with the domain attributes for the view
      */
     @GetMapping("/owners/{ownerId}")
     public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {

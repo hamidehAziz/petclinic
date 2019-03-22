@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.vet;
 
 import org.junit.Test;
 import org.junit.Before;
+import org.springframework.samples.petclinic.mysql.domain.Specialty;
+import org.springframework.samples.petclinic.mysql.domain.Vet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

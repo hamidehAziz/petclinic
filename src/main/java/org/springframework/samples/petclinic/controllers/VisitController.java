@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.controllers;
 
-import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresVisitRepository;
+import org.springframework.samples.petclinic.mysql.domain.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -33,15 +37,20 @@ import java.util.Map;
  * @author Dave Syer
  */
 @Controller
-class VisitController {
+public class VisitController {
 
-    private final VisitRepository visits;
-    private final PetRepository pets;
+    private final MysqlVisitRepository visits;
+    private final PostgresVisitRepository newVisits;
+    private final MysqlPetRepository pets;
+    private final PostgresPetRepository newPets;
 
 
-    public VisitController(VisitRepository visits, PetRepository pets) {
+    public VisitController(MysqlVisitRepository visits, PostgresVisitRepository newVisits,
+                           MysqlPetRepository pets, PostgresPetRepository newPets) {
         this.visits = visits;
+        this.newVisits = newVisits;
         this.pets = pets;
+        this.newPets = newPets;
     }
 
     @InitBinder

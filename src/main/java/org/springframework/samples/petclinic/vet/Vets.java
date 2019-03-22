@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.springframework.samples.petclinic.mysql.domain.Vet;
+
 import java.util.ArrayList;
 import java.util.List;
 

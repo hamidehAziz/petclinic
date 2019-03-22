@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.visit;
+package org.springframework.samples.petclinic.postgres.repo;
 
-import java.util.List;
-
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 /**
- * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
+ * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming
  * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  *
  * @author Ken Krebs
@@ -30,16 +32,15 @@ import org.springframework.samples.petclinic.model.BaseEntity;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VisitRepository extends Repository<Visit, Integer> {
+public interface PostgresVetRepository extends Repository<PostgresVet, Integer> {
 
     /**
-     * Save a <code>Visit</code> to the data store, either inserting or updating it.
+     * Retrieve all <code>Vet</code>s from the data store.
      *
-     * @param visit the <code>Visit</code> to save
-     * @see BaseEntity#isNew
+     * @return a <code>Collection</code> of <code>Vet</code>s
      */
-    void save(Visit visit) throws DataAccessException;
+    @Transactional(readOnly = true)
+    Collection<PostgresVet> findAll() throws DataAccessException;
 
-    List<Visit> findByPetId(Integer petId);
 
 }

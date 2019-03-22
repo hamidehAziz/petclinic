@@ -22,6 +22,9 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
+import org.springframework.samples.petclinic.mysql.domain.PetType;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,12 +41,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PetTypeFormatter implements Formatter<PetType> {
 
-    private final PetRepository pets;
+    private final MysqlPetRepository pets;
+    private final PostgresPetRepository newPets;
 
 
     @Autowired
-    public PetTypeFormatter(PetRepository pets) {
+    public PetTypeFormatter(MysqlPetRepository pets, PostgresPetRepository newPets) {
         this.pets = pets;
+        this.newPets = newPets;
     }
 
     @Override

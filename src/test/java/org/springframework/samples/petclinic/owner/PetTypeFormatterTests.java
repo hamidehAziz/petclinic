@@ -1,17 +1,19 @@
 package org.springframework.samples.petclinic.owner;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.samples.petclinic.mysql.domain.PetType;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,13 +26,13 @@ import static org.junit.Assert.assertEquals;
 public class PetTypeFormatterTests {
 
     @Mock
-    private PetRepository pets;
+    private MysqlPetRepository pets;
 
     private PetTypeFormatter petTypeFormatter;
 
     @Before
     public void setup() {
-        this.petTypeFormatter = new PetTypeFormatter(pets);
+        this.petTypeFormatter = new PetTypeFormatter(pets, null);
     }
 
     @Test

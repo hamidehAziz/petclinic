@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.mysql.repo;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.Repository;
+import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.mysql.domain.Visit;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
- * Repository class for <code>Pet</code> domain objects All method names are compliant with Spring Data naming
+ * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
  * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  *
  * @author Ken Krebs
@@ -30,29 +31,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface PetRepository extends Repository<Pet, Integer> {
+public interface MysqlVisitRepository extends Repository<Visit, Integer> {
 
     /**
-     * Retrieve all {@link PetType}s from the data store.
-     * @return a Collection of {@link PetType}s.
+     * Save a <code>Visit</code> to the data store, either inserting or updating it.
+     *
+     * @param visit the <code>Visit</code> to save
+     * @see BaseEntity#isNew
      */
-    @Query("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
-    @Transactional(readOnly = true)
-    List<PetType> findPetTypes();
+    void save(Visit visit) throws DataAccessException;
 
-    /**
-     * Retrieve a {@link Pet} from the data store by id.
-     * @param id the id to search for
-     * @return the {@link Pet} if found
-     */
-    @Transactional(readOnly = true)
-    Pet findById(Integer id);
-
-    /**
-     * Save a {@link Pet} to the data store, either inserting or updating it.
-     * @param pet the {@link Pet} to save
-     */
-    void save(Pet pet);
+    List<Visit> findByPetId(Integer petId);
 
 }
-

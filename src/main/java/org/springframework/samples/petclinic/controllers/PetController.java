@@ -13,8 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.controllers;
 
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
+import org.springframework.samples.petclinic.mysql.domain.PetType;
+import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+import org.springframework.samples.petclinic.owner.PetValidator;
+import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -32,15 +40,20 @@ import java.util.Collection;
  */
 @Controller
 @RequestMapping("/owners/{ownerId}")
-class PetController {
+public class PetController {
 
     private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
-    private final PetRepository pets;
-    private final OwnerRepository owners;
+    private final MysqlPetRepository pets;
+    private final PostgresPetRepository newPets;
+    private final MysqlOwnerRepository owners;
+    private final PostgresOwnerRepository newOwners;
 
-    public PetController(PetRepository pets, OwnerRepository owners) {
+    public PetController(MysqlPetRepository pets, PostgresPetRepository newPets,
+                         MysqlOwnerRepository owners, PostgresOwnerRepository newOwners) {
         this.pets = pets;
+        this.newPets = newPets;
         this.owners = owners;
+        this.newOwners = newOwners;
     }
 
     @ModelAttribute("types")

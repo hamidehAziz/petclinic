@@ -16,9 +16,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerController;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.petclinic.controllers.OwnerController;
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +38,10 @@ public class OwnerControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private OwnerRepository owners;
+    private MysqlOwnerRepository owners;
+
+    @MockBean
+    private PostgresOwnerRepository newOwners;
 
     private Owner george;
 

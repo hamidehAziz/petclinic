@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.controllers;
 
+import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
+import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
+import org.springframework.samples.petclinic.postgres.repo.PostgresVetRepository;
+import org.springframework.samples.petclinic.vet.Vets;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -28,12 +33,14 @@ import java.util.Map;
  * @author Arjen Poutsma
  */
 @Controller
-class VetController {
+public class VetController {
 
-    private final VetRepository vets;
+    private final MysqlVetRepository vets;
+    private final PostgresVetRepository newVets;
 
-    public VetController(VetRepository clinicService) {
+    public VetController(MysqlVetRepository clinicService, PostgresVetRepository newVets) {
         this.vets = clinicService;
+        this.newVets = newVets;
     }
 
     @GetMapping("/vets.html")
@@ -42,6 +49,7 @@ class VetController {
         // objects so it is simpler for Object-Xml mapping
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
+        Collection<PostgresVet> vetList = this.newVets.findAll();
         model.put("vets", vets);
         return "vets/vetList";
     }

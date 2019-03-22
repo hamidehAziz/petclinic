@@ -16,13 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
-import org.springframework.samples.petclinic.owner.Pet;
-import org.springframework.samples.petclinic.owner.PetController;
-import org.springframework.samples.petclinic.owner.PetRepository;
-import org.springframework.samples.petclinic.owner.PetType;
-import org.springframework.samples.petclinic.owner.PetTypeFormatter;
+import org.springframework.samples.petclinic.controllers.PetController;
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
+import org.springframework.samples.petclinic.mysql.domain.PetType;
+import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -46,10 +47,16 @@ public class PetControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private PetRepository pets;
+    private MysqlPetRepository pets;
 
     @MockBean
-    private OwnerRepository owners;
+    private PostgresPetRepository newPets;
+
+    @MockBean
+    private MysqlOwnerRepository owners;
+
+    @MockBean
+    private PostgresOwnerRepository newOwners;
 
     @Before
     public void setup() {

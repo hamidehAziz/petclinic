@@ -3,8 +3,11 @@ package org.springframework.samples.petclinic.owner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OwnerTest {
 
+    @Mock
     private Set<Pet> pets;
 
     private Owner owner;

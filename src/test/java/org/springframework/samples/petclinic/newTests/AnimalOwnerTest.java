@@ -1,10 +1,14 @@
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.newTests;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.samples.petclinic.mysql.domain.Owner;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
+import org.springframework.samples.petclinic.mysql.domain.PetType;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
