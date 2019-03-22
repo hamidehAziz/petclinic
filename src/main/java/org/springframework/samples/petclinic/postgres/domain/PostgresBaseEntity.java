@@ -15,17 +15,35 @@
  */
 package org.springframework.samples.petclinic.postgres.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
- * Models a {@link PostgresVet Vet's} specialty (for example, dentistry).
+ * Simple JavaBean domain object with an id property. Used as a base class for objects
+ * needing this property.
  *
+ * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@Entity
-@Table(name = "postgres_specialties")
-public class PostgresSpecialty extends PostgresNamedEntity implements Serializable {
+@MappedSuperclass
+public class PostgresBaseEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public boolean isNew() {
+        return this.id == null;
+    }
 
 }

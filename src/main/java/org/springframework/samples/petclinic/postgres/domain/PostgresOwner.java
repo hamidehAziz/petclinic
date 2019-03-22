@@ -18,7 +18,6 @@ package org.springframework.samples.petclinic.postgres.domain;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -35,7 +34,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "postgres_owners")
-public class PostgresOwner extends Person {
+public class PostgresOwner extends PostgresPerson {
     @Column(name = "address")
     @NotEmpty
     private String address;

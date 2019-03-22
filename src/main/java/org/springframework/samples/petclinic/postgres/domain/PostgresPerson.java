@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.model;
+package org.springframework.samples.petclinic.postgres.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -25,7 +25,7 @@ import javax.validation.constraints.NotEmpty;
  * @author Ken Krebs
  */
 @MappedSuperclass
-public class Person extends BaseEntity {
+public class PostgresPerson extends PostgresBaseEntity {
 
     @Column(name = "first_name")
     @NotEmpty

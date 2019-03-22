@@ -22,6 +22,7 @@ import org.springframework.samples.petclinic.mysql.domain.Owner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring Data naming
@@ -59,6 +60,8 @@ public interface MysqlOwnerRepository extends Repository<Owner, Integer> {
      * @param owner the {@link Owner} to save
      */
     void save(Owner owner);
+
+    List<Owner> findAll();
 
 
 }

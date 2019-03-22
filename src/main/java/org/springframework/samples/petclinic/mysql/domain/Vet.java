@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.mysql.domain;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
-import org.springframework.samples.petclinic.model.Person;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;

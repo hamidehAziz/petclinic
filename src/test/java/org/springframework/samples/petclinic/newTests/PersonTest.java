@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.springframework.samples.petclinic.model.Person;
+import org.springframework.samples.petclinic.mysql.domain.Person;
 import org.springframework.util.SerializationUtils;
 
     @RunWith(MockitoJUnitRunner.class)

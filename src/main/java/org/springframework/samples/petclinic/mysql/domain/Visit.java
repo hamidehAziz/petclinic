@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.mysql.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.mysql.domain;
 
-import org.springframework.samples.petclinic.model.NamedEntity;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

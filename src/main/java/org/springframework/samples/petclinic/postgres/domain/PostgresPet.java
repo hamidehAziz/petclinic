@@ -18,7 +18,6 @@ package org.springframework.samples.petclinic.postgres.domain;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.NamedEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -33,7 +32,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "postgres_pets")
-public class PostgresPet extends NamedEntity {
+public class PostgresPet extends PostgresNamedEntity {
 
     @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

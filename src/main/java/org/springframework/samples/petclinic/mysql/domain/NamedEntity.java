@@ -13,19 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.postgres.domain;
+package org.springframework.samples.petclinic.mysql.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 
 /**
- * Models a {@link PostgresVet Vet's} specialty (for example, dentistry).
+ * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as a base class for objects
+ * needing these properties.
  *
+ * @author Ken Krebs
  * @author Juergen Hoeller
  */
-@Entity
-@Table(name = "postgres_specialties")
-public class PostgresSpecialty extends PostgresNamedEntity implements Serializable {
+@MappedSuperclass
+public class NamedEntity extends BaseEntity {
+
+    @Column(name = "name")
+    private String name;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 
 }

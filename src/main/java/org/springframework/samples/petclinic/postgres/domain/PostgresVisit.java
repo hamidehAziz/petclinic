@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.postgres.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "postgres_visits")
-public class PostgresVisit extends BaseEntity {
+public class PostgresVisit extends PostgresBaseEntity {
 
     @Column(name = "visit_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

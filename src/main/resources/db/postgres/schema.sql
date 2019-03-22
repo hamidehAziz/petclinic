@@ -35,7 +35,7 @@ CREATE TABLE postgres_types (
 CREATE INDEX types_name ON postgres_types (name);
 
 CREATE TABLE postgres_owners (
-  id         INTEGER PRIMARY KEY,
+  id         SERIAL PRIMARY KEY,
   first_name VARCHAR(30),
   last_name  VARCHAR(30),
   address    VARCHAR(255),

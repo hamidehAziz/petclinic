@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.postgres.domain;
 
-import org.springframework.samples.petclinic.model.NamedEntity;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -26,6 +24,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "postgres_types")
-public class PostgresPetType extends NamedEntity {
+public class PostgresPetType extends PostgresNamedEntity {
 
 }

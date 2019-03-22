@@ -18,7 +18,6 @@ package org.springframework.samples.petclinic.mysql.domain;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.NamedEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
