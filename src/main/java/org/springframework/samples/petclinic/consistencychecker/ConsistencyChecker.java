@@ -79,7 +79,7 @@ public class ConsistencyChecker {
             String cityActual = ownerPost.getCity();
             String telephoneActual = ownerPost.getTelephone();
 
-            if (idExpected != idActual){
+            if (idExpected !== idActual){
                 inconsistencyOwner++;
 
                 //correct it
@@ -88,7 +88,7 @@ public class ConsistencyChecker {
 
             }
 
-            if (firstNameExpected != firstNameActual){
+            if (firstNameExpected !== firstNameActual){
                 inconsistencyOwner++;
 
                 //correct it
@@ -96,7 +96,7 @@ public class ConsistencyChecker {
                 firstNameActual = firstNameExpected;
             }
 
-            if (lastNameExpected != lastNameActual){
+            if (lastNameExpected !== lastNameActual){
                 inconsistencyOwner++;
 
                 //correct it
@@ -104,7 +104,7 @@ public class ConsistencyChecker {
                 lastNameActual = firstNameExpected;
             }
 
-            if (addressExpected != addressActual){
+            if (addressExpected !== addressActual){
                 inconsistencyOwner++;
 
                 //correct it
@@ -112,7 +112,7 @@ public class ConsistencyChecker {
                 addressActual = addressExpected;
             }
 
-            if (cityExpected != cityActual){
+            if (cityExpected !== cityActual){
                 inconsistencyOwner++;
 
                 //correct it
@@ -121,7 +121,7 @@ public class ConsistencyChecker {
 
             }
 
-            if (telephoneExpected != telephoneActual){
+            if (telephoneExpected !== telephoneActual){
                 inconsistencyOwner++;
 
                 //correct it
