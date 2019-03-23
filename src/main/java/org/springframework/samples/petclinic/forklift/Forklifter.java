@@ -4,20 +4,25 @@ import org.springframework.samples.petclinic.mysql.domain.Owner;
 import org.springframework.samples.petclinic.mysql.domain.Pet;
 import org.springframework.samples.petclinic.mysql.domain.Vet;
 import org.springframework.samples.petclinic.mysql.domain.Specialty;
+import org.springframework.samples.petclinic.mysql.domain.Visit;
 import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlSpecialtyRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
 import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
 import org.springframework.samples.petclinic.postgres.domain.PostgresPet;
 import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
 import org.springframework.samples.petclinic.postgres.domain.PostgresSpecialty;
+import org.springframework.samples.petclinic.postgres.domain.PostgresVisit;
 import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresVetRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresSpecialtyRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresVisitRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -27,14 +32,15 @@ public class Forklifter {
     protected MysqlPetRepository mysqlPetRepository;
     protected MysqlVetRepository mysqlVetRepository;
     protected MysqlSpecialtyRepository mysqlSpecialtyRepository;
-
+    private MysqlVisitRepository mysqlVisitRepository;
 
     private PostgresOwnerRepository postgresOwnerRepository;
     private PostgresPetRepository postgresPetRepository;
     private PostgresVetRepository postgresVetRepository;
     private PostgresSpecialtyRepository postgresSpecialtyRepository;
+    private PostgresVisitRepository postgresVisitRepository;
 
-    public Forklifter(MysqlOwnerRepository mysqlOwnerRepository, PostgresOwnerRepository postgresOwnerRepository, MysqlPetRepository mysqlPetRepository, PostgresPetRepository postgresPetRepository, MysqlVetRepository mysqlVetRepository, PostgresVetRepository postgresVetRepository, MysqlSpecialtyRepository mysqlSpecialtyRepository, PostgresSpecialtyRepository postgresSpecialtyRepository) {
+    public Forklifter(MysqlOwnerRepository mysqlOwnerRepository, PostgresOwnerRepository postgresOwnerRepository, MysqlPetRepository mysqlPetRepository, PostgresPetRepository postgresPetRepository, MysqlVetRepository mysqlVetRepository, PostgresVetRepository postgresVetRepository, MysqlSpecialtyRepository mysqlSpecialtyRepository, PostgresSpecialtyRepository postgresSpecialtyRepository, MysqlVisitRepository mysqlVisitRepository, PostgresVisitRepository postgresVisitRepository) {
         this.mysqlOwnerRepository = mysqlOwnerRepository;
         this.postgresOwnerRepository = postgresOwnerRepository;
         this.mysqlPetRepository = mysqlPetRepository;
@@ -43,6 +49,8 @@ public class Forklifter {
         this.postgresVetRepository = postgresVetRepository;
         this.mysqlSpecialtyRepository = mysqlSpecialtyRepository;
         this.postgresSpecialtyRepository = postgresSpecialtyRepository;
+        this.mysqlVisitRepository = mysqlVisitRepository;
+        this.postgresVisitRepository = postgresVisitRepository;
     }
 
     public void forklift() {
@@ -50,6 +58,7 @@ public class Forklifter {
         forkLiftPets();
         forkLiftVets();
         forkLiftSpecialties();
+        forkLiftVisits();
     }
 
     public void forkliftOwners() {
@@ -70,7 +79,7 @@ public class Forklifter {
     }
 
     public void forkLiftPets() {
-        List<Pet> pets = MysqlPetRepository.findPets();
+        List<Pet> pets = mysqlPetRepository.findPets();
 
         PostgresPet postgresPet;
 
@@ -87,7 +96,7 @@ public class Forklifter {
     }
 
     public void forkLiftVets() {
-        List<Vet> vets = MysqlVetRepository.findAll();
+        Collection<Vet> vets = mysqlVetRepository.findAll();
 
         PostgresVet postgresVet;
 
@@ -111,6 +120,20 @@ public class Forklifter {
             postgresSpecialty.setId(specialty.getId());
             postgresSpecialty.setName(specialty.getName());
             postgresSpecialtyRepository.save(postgresSpecialty);
+        }
+    }
+
+    public void forkLiftVisits(){
+        List<Visit> visits = mysqlVisitRepository.findAll();
+
+        PostgresVisit postgresVisit;
+
+        for (Visit visit : visits){
+
+            postgresVisit = new PostgresVisit();
+            postgresVisit.setDate(visit.getDate());
+            postgresVisit.setDescription(visit.getDescription());
+            postgresVisit.setPetId(visit.getPetId());
         }
     }
 
