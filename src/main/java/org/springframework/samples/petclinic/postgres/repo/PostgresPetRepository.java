@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.postgres.repo;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.samples.petclinic.mysql.domain.Pet;
 import org.springframework.samples.petclinic.postgres.domain.PostgresPet;
 import org.springframework.samples.petclinic.postgres.domain.PostgresPetType;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +56,8 @@ public interface PostgresPetRepository extends Repository<PostgresPet, Integer> 
      * @param pet the {@link PostgresPet} to save
      */
     void save(PostgresPet pet);
+
+    List<Pet> findPets();
 
 }
 

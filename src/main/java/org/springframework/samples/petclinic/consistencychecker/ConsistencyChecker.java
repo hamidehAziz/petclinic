@@ -59,10 +59,10 @@ public class ConsistencyChecker {
     public int ownerConsistencyChecker(){
 
         List<Owner> ownersSql = mysqlOwnerRepository.findAll();
-        List<Owner> ownersPost = postgresOwnerRepository.findAll();
+        List<PostgresOwner> ownersPost = postgresOwnerRepository.findAll();
         int inconsistencyOwner = 0;
         for ( Owner ownerSql: ownersSql)
-        for (Owner ownerPost: ownersPost)
+        for (PostgresOwner ownerPost: ownersPost)
         {
 
             Integer idExpected = ownerSql.getId();
