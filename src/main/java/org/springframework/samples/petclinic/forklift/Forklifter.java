@@ -138,7 +138,8 @@ public class Forklifter {
                 postgresVisit = new PostgresVisit();
                 postgresVisit.setDate(visit.getDate());
                 postgresVisit.setDescription(visit.getDescription());
-                postgresVisitRepository.setPetId(visit.getPetId());
+                postgresVisit.setPetId(visit.getPetId());
+                postgresVisitRepository.save(postgresVisit);
             }
         }
 
