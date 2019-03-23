@@ -42,5 +42,6 @@ public interface PostgresVetRepository extends Repository<PostgresVet, Integer> 
     @Transactional(readOnly = true)
     Collection<PostgresVet> findAll() throws DataAccessException;
 
+    void save(PostgresVet vet);
 
 }

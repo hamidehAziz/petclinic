@@ -38,14 +38,14 @@ public class PostgresVet extends PostgresPerson {
     @JoinTable(name = "postgres_vet_specialties", joinColumns = @JoinColumn(name = "vet_id"), inverseJoinColumns = @JoinColumn(name = "specialty_id"))
     private Set<PostgresSpecialty> specialties;
 
-    protected Set<PostgresSpecialty> getSpecialtiesInternal() {
+    public Set<PostgresSpecialty> getSpecialtiesInternal() {
         if (this.specialties == null) {
             this.specialties = new HashSet<>();
         }
         return this.specialties;
     }
 
-    protected void setSpecialtiesInternal(Set<PostgresSpecialty> specialties) {
+    public void setSpecialtiesInternal(Set<PostgresSpecialty> specialties) {
         this.specialties = specialties;
     }
 

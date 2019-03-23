@@ -56,5 +56,7 @@ public interface MysqlPetRepository extends Repository<Pet, Integer> {
      */
     void save(Pet pet);
 
+    List<Pet> findPets();
+
 }
 

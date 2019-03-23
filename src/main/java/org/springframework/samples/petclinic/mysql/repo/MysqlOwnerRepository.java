@@ -63,5 +63,4 @@ public interface MysqlOwnerRepository extends Repository<Owner, Integer> {
 
     List<Owner> findAll();
 
-
 }
