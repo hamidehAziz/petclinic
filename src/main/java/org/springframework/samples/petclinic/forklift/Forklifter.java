@@ -8,6 +8,7 @@ import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlPetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
+import org.springframework.samples.petclinic.mysql.repo.MysqlPetTypesRepository;
 import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
 import org.springframework.samples.petclinic.postgres.domain.PostgresPet;
 import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
@@ -16,6 +17,7 @@ import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerReposito
 import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresVetRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresVisitRepository;
+import org.springframework.samples.petclinic.postgres.repo.PostgresPetTypesRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -28,13 +30,17 @@ public class Forklifter {
     private MysqlPetRepository mysqlPetRepository;
     private MysqlVetRepository mysqlVetRepository;
     private MysqlVisitRepository mysqlVisitRepository;
+    private MysqlPetTypesRepository mysqlPetTypesRepository;
+
 
     private PostgresOwnerRepository postgresOwnerRepository;
     private PostgresPetRepository postgresPetRepository;
     private PostgresVetRepository postgresVetRepository;
     private PostgresVisitRepository postgresVisitRepository;
+    private PostgresPetTypesRepository postgresPetTypesRepository;
 
-    public Forklifter(MysqlOwnerRepository mysqlOwnerRepository, PostgresOwnerRepository postgresOwnerRepository, MysqlPetRepository mysqlPetRepository, PostgresPetRepository postgresPetRepository, MysqlVetRepository mysqlVetRepository, PostgresVetRepository postgresVetRepository, MysqlVisitRepository mysqlVisitRepository, PostgresVisitRepository postgresVisitRepository) {
+
+    public Forklifter(MysqlOwnerRepository mysqlOwnerRepository, PostgresOwnerRepository postgresOwnerRepository, MysqlPetRepository mysqlPetRepository, PostgresPetRepository postgresPetRepository, MysqlVetRepository mysqlVetRepository, PostgresVetRepository postgresVetRepository, MysqlVisitRepository mysqlVisitRepository, PostgresVisitRepository postgresVisitRepository, MysqlPetTypesRepository mysqlPetTypesRepository, PostgresPetTypesRepository postgresPetTypesRepository) {
         this.mysqlOwnerRepository = mysqlOwnerRepository;
         this.postgresOwnerRepository = postgresOwnerRepository;
         this.mysqlPetRepository = mysqlPetRepository;
@@ -43,13 +49,16 @@ public class Forklifter {
         this.postgresVetRepository = postgresVetRepository;
         this.mysqlVisitRepository = mysqlVisitRepository;
         this.postgresVisitRepository = postgresVisitRepository;
+        this.mysqlPetTypesRepository = mysqlPetTypesRepository;
+        this.postgresPetTypesRepository = postgresPetTypesRepository;
     }
 
     public void forklift() {
         forkliftOwners();
-        forkLiftPets();
-        forkLiftVets();
-        forkLiftVisits();
+        forkliftPets();
+        forkliftVets();
+        forkliftVisits();
+        forkliftPetTypes();
         //TODO forklift specialities
         //TODO forklift types
     }
@@ -71,7 +80,7 @@ public class Forklifter {
         }
     }
 
-    public void forkLiftPets() {
+    public void forkliftPets() {
         List<Pet> pets = mysqlPetRepository.findPets();
 
         PostgresPet postgresPet;
@@ -88,7 +97,7 @@ public class Forklifter {
 
     }
 
-    public void forkLiftVets() {
+    public void forkliftVets() {
         Collection<Vet> vets = mysqlVetRepository.findAll();
 
         PostgresVet postgresVet;
@@ -103,7 +112,7 @@ public class Forklifter {
 
     }
 
-    public void forkLiftVisits(){
+    public void forkliftVisits(){
         List<Visit> visits = mysqlVisitRepository.findAll();
 
         PostgresVisit postgresVisit;
