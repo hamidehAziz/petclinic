@@ -14,6 +14,7 @@ import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository
 import org.springframework.samples.petclinic.postgres.repo.PostgresVetRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -64,7 +65,7 @@ public class Forklifter {
     }
 
     public void forkLiftPets() {
-        List<Pet> pets = MysqlPetRepository.findPets();
+        List<Pet> pets = mysqlPetRepository.findPets();
 
         PostgresPet postgresPet;
 
@@ -81,7 +82,7 @@ public class Forklifter {
     }
 
     public void forkLiftVets() {
-        List<Vet> vets = MysqlVetRepository.findAll();
+        Collection<Vet> vets = mysqlVetRepository.findAll();
 
         PostgresVet postgresVet;
 
