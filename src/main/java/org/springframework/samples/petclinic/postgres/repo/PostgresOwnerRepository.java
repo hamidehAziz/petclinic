@@ -18,10 +18,12 @@ package org.springframework.samples.petclinic.postgres.repo;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.mysql.domain.Owner;
 import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring Data naming
@@ -59,6 +61,8 @@ public interface PostgresOwnerRepository extends Repository<PostgresOwner, Integ
      * @param owner the {@link PostgresOwner} to save
      */
     void save(PostgresOwner owner);
+
+    List<Owner> findAll();
 
 
 }
