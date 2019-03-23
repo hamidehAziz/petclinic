@@ -11,11 +11,7 @@ import org.springframework.samples.petclinic.mysql.repo.MysqlVetRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlSpecialtyRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlVisitRepository;
 import org.springframework.samples.petclinic.mysql.repo.MysqlPetTypesRepository;
-import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
-import org.springframework.samples.petclinic.postgres.domain.PostgresPet;
-import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
-import org.springframework.samples.petclinic.postgres.domain.PostgresSpecialty;
-import org.springframework.samples.petclinic.postgres.domain.PostgresVisit;
+import org.springframework.samples.petclinic.postgres.domain.*;
 import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresPetRepository;
 import org.springframework.samples.petclinic.postgres.repo.PostgresVetRepository;
@@ -31,9 +27,9 @@ import java.util.List;
 public class Forklifter {
 
     private MysqlOwnerRepository mysqlOwnerRepository;
-    protected MysqlPetRepository mysqlPetRepository;
-    protected MysqlVetRepository mysqlVetRepository;
-    protected MysqlSpecialtyRepository mysqlSpecialtyRepository;
+    private MysqlPetRepository mysqlPetRepository;
+    private MysqlVetRepository mysqlVetRepository;
+    private MysqlSpecialtyRepository mysqlSpecialtyRepository;
     private MysqlVisitRepository mysqlVisitRepository;
     private MysqlPetTypesRepository mysqlPetTypesRepository;
 
@@ -142,9 +138,13 @@ public class Forklifter {
                 postgresVisit = new PostgresVisit();
                 postgresVisit.setDate(visit.getDate());
                 postgresVisit.setDescription(visit.getDescription());
-                postgresVisit.setPetId(visit.getPetId());
+                postgresVisitRepository.setPetId(visit.getPetId());
             }
         }
+
+        public void forkliftPetTypes () {
+
+            PostgresPetType postgresPetType;
 
     }
 }
