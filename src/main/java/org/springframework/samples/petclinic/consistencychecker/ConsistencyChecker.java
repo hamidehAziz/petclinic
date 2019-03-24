@@ -19,6 +19,7 @@ import org.springframework.samples.petclinic.postgres.repo.PostgresVisitReposito
 import org.springframework.samples.petclinic.postgres.repo.PostgresPetTypesRepository;
 import org.springframework.stereotype.Component;
 
+
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -135,10 +136,80 @@ public class ConsistencyChecker {
 
     }
 
-    public void petConsistencyChecker(){
+    public int petConsistencyChecker(){
 
+        List<Pet> petsSql = mysqlPetRepository.findPets();
+        List<PostgresPet> petsPost = postgresPetRepository.findPets();
+        int inconsistencyPets = 0;
+        for ( Pet petSql: petsSql)
+            for (PostgresPet petPost: petsPost) {
+
+                Integer idExpected = petSql.getId();
+                String nameExpected = petSql.getName();
+                LocalDate birthDateExpected = petSql.getBirthDate();
+                PetType typeExpected = petSql.getType();
+                Owner ownerExpected = petSql.getOwner();
+
+
+                Integer idActual = petPost.getId();
+                String nameActual = petPost.getName();
+                LocalDate birthDateActual = petPost.getBirthDate();
+                PetType typeActual = petPost.getType();
+                Owner ownerActual = petPost.getOwner();
+
+                if (!idExpected.equals(idActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    idActual = idExpected;
+
+                }
+
+
+                if (!nameExpected.equals(nameActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    nameActual = nameExpected;
+
+                }
+
+                if (!birthDateExpected.equals(birthDateActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    birthDateActual = birthDateExpected;
+
+                }
+
+                if (!typeExpected.equals(typeActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    typeActual = typeExpected;
+
+                }
+
+                if (!ownerExpected.equals(ownerActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    ownerActual = ownerExpected;
+
+                }
+
+            }
+
+        System.out.println(inconsistencyPets);
+        return inconsistencyPets;
 
     }
+
 
     public void vetConsistencyChecker(){
 
