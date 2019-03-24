@@ -159,12 +159,14 @@ public class ConsistencyChecker {
                 PetType typeActual = petPost.getType();
                 Owner ownerActual = petPost.getOwner();
 
+
+
                 if (!idExpected.equals(idActual)) {
                     inconsistencyPets++;
 
                     //correct it
 
-                    idActual = idExpected;
+                    petPost.setId(idExpected);
 
                 }
 
@@ -174,7 +176,7 @@ public class ConsistencyChecker {
 
                     //correct it
 
-                    nameActual = nameExpected;
+                    petPost.setName(nameExpected);
 
                 }
 
@@ -183,7 +185,7 @@ public class ConsistencyChecker {
 
                     //correct it
 
-                    birthDateActual = birthDateExpected;
+                    petPost.setBirthDate(birthDateExpected);
 
                 }
 
@@ -192,7 +194,7 @@ public class ConsistencyChecker {
 
                     //correct it
 
-                    typeActual = typeExpected;
+                    petPost.setType(typeExpected);
 
                 }
 
@@ -201,7 +203,7 @@ public class ConsistencyChecker {
 
                     //correct it
 
-                    ownerActual = ownerExpected;
+                    petPost.setOwner(ownerExpected);
 
                 }
 
@@ -268,6 +270,8 @@ public class ConsistencyChecker {
                 }
 
             }
+        System.out.println(inconsistencyVets);
+        return inconsistencyVets;
     }
 
     public int specialtiesConsistencyChecker(){
