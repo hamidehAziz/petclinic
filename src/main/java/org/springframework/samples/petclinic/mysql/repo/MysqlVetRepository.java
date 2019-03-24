@@ -15,13 +15,12 @@
  */
 package org.springframework.samples.petclinic.mysql.repo;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.mysql.domain.Vet;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming
@@ -40,7 +39,7 @@ public interface MysqlVetRepository extends Repository<Vet, Integer> {
      * @return a <code>Collection</code> of <code>Vet</code>s
      */
     @Transactional(readOnly = true)
-    Collection<Vet> findAll() throws DataAccessException;
+    List<Vet> findAll() throws DataAccessException;
 
 
 

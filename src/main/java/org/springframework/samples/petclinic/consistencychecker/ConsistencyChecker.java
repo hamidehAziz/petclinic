@@ -23,6 +23,8 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 public class ConsistencyChecker {
 
 
@@ -68,14 +70,14 @@ public class ConsistencyChecker {
 
             Integer idExpected = ownerSql.getId();
             String firstNameExpected = ownerSql.getFirstName();
-            String lastNameExpected = ownerSql.getFirstName();
+            String lastNameExpected = ownerSql.getLastName();
             String addressExpected = ownerSql.getAddress();
             String cityExpected = ownerSql.getCity();
             String telephoneExpected = ownerSql.getTelephone();
 
             Integer idActual = ownerPost.getId();
             String firstNameActual = ownerPost.getFirstName();
-            String lastNameActual = ownerPost.getFirstName();
+            String lastNameActual = ownerPost.getLastName();
             String addressActual= ownerPost.getAddress();
             String cityActual = ownerPost.getCity();
             String telephoneActual = ownerPost.getTelephone();
@@ -211,8 +213,61 @@ public class ConsistencyChecker {
     }
 
 
-    public void vetConsistencyChecker(){
+    public int vetConsistencyChecker(){
 
+        List<Vet> vetsSql = mysqlVetRepository.findAll();
+        List<PostgresVet> vetsPost = postgresOwnerRepository.findAll();
+        int inconsistencyVets = 0;
+        for ( Vet vetSql: vetsSql)
+            for (PostgresVet vetPost: vetsPost) {
+
+                Integer idExpected = vetSql.getId();
+                String firstNameExpected = vetSql.getFirstName();
+                String lastNameExpected = vetSql.getLastName();
+                List<Specialty> specialtiesExpected = vetSql.getSpecialties();
+
+
+                Integer idActual = vetPost.getId();
+                String firstNameActual = vetPost.getFirstName();
+                String lastNameActual = vetPost.getLastName();
+                List<PostgresSpecialty> specialtiesActual = vetPost.getSpecialties();
+
+
+                if (!idExpected.equals(idActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setId(idExpected);
+
+                }
+
+                if (!firstNameExpected.equals(firstNameActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setFirstName(firstNameExpected);
+                }
+
+                if (!lastNameExpected.equals(lastNameActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setLastName(lastNameExpected);
+                }
+
+                if (!specialtiesExpected.equals(specialtiesActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setSpecialtiesInternal(specialtiesExpected);
+
+                }
+
+            }
     }
 
     public int specialtiesConsistencyChecker(){

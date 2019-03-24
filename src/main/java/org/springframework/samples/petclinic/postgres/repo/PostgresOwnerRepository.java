@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
+import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -61,7 +62,7 @@ public interface PostgresOwnerRepository extends Repository<PostgresOwner, Integ
      */
     void save(PostgresOwner owner);
 
-    List<PostgresOwner> findAll();
+    List<PostgresVet> findAll();
 
 
 }
