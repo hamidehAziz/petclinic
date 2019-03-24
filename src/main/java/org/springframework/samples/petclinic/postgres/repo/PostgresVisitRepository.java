@@ -43,4 +43,6 @@ public interface PostgresVisitRepository extends Repository<PostgresVisit, Integ
 
     List<PostgresVisit> findByPetId(Integer petId);
 
+    List<PostgresVisit> findAll();
+
 }

@@ -84,7 +84,7 @@ public class ConsistencyChecker {
 
                 //correct it
 
-                idActual = idExpected;
+                ownerPost.setId(idExpected);
 
             }
 
@@ -93,7 +93,7 @@ public class ConsistencyChecker {
 
                 //correct it
 
-                firstNameActual = firstNameExpected;
+                ownerPost.setFirstName(firstNameExpected);
             }
 
             if (!lastNameExpected.equals(lastNameActual)){
@@ -101,7 +101,7 @@ public class ConsistencyChecker {
 
                 //correct it
 
-                lastNameActual = firstNameExpected;
+                ownerPost.setLastName(lastNameExpected);
             }
 
             if (!addressExpected.equals(addressActual)){
@@ -109,7 +109,7 @@ public class ConsistencyChecker {
 
                 //correct it
 
-                addressActual = addressExpected;
+                ownerPost.setAddress(addressActual);
             }
 
             if (!cityExpected.equals(cityActual)){
@@ -117,7 +117,7 @@ public class ConsistencyChecker {
 
                 //correct it
 
-                cityActual = cityExpected;
+                ownerPost.setCity(cityExpected);
 
             }
 
@@ -125,7 +125,7 @@ public class ConsistencyChecker {
                 inconsistencyOwner++;
 
                 //correct it
-                telephoneActual = telephoneExpected;
+                ownerPost.setTelephone(telephoneExpected);
             }
 
 
@@ -144,13 +144,93 @@ public class ConsistencyChecker {
 
     }
 
-    public void specialtiesConsistencyChecker(){
+    public int specialtiesConsistencyChecker(){
+        List<Specialty> specialtiesSql = mysqlSpecialtyRepository.findAll();
+        List<PostgresSpecialty> specialtiesPost = postgresSpecialtyRepository.findSpecialties();
+        int inconsistencySpecialty = 0;
 
+
+        for ( Specialty specialtySql: specialtiesSql)
+            for (PostgresSpecialty specialtyPost: specialtiesPost)
+            {
+
+                Integer idExpected = specialtySql.getId();
+                String nameExpected = specialtySql.getName();
+
+
+
+                Integer idActual = specialtyPost.getId();
+                String nameActual = specialtyPost.getName();
+
+
+                if (!idExpected.equals(idActual)){
+                    inconsistencySpecialty++;
+
+                    //correct it
+                    specialtyPost.setId(idExpected);
+
+                }
+
+                if (!nameExpected.equals(nameActual)){
+                    inconsistencySpecialty++;
+
+                    //correct it
+                    specialtyPost.setName(nameExpected);
+
+                }
+
+            }
+        return inconsistencySpecialty;
 
 
     }
 
-    public void visitsConsistencyChecker(){
+    public int visitsConsistencyChecker(){
+
+        List<Visit> visitsSql = mysqlVisitRepository.findAll();
+        List<PostgresVisit> visitsPost = postgresVisitRepository.findAll();
+        int inconsistencyVisit= 0;
+
+        for ( Visit visitSql: visitsSql)
+            for (PostgresVisit visitPost: visitsPost){
+
+                LocalDate dateExpected = visitSql.getDate();
+                String descriptionExpected = visitSql.getDescription();
+                Integer petIdExpected = visitSql.getPetId();
+
+                LocalDate dateActual = visitPost.getDate();
+                String descriptionActual= visitPost.getDescription();
+                Integer petIdActual = visitPost.getPetId();
+
+                if (!dateExpected.equals(dateActual)){
+                    inconsistencyVisit++;
+
+                    //correct it
+                    visitPost.setDate(dateExpected);
+
+                }
+
+                if (!descriptionExpected.equals(descriptionActual)){
+                    inconsistencyVisit++;
+
+                    //correct it
+                    visitPost.setDescription(descriptionExpected);
+
+                }
+
+                if (!petIdExpected.equals(petIdActual)){
+                    inconsistencyVisit++;
+
+                    //correct it
+                    visitPost.setPetId(petIdExpected);
+
+                }
+
+
+            }
+
+            return inconsistencyVisit;
+
 
     }
 
