@@ -31,7 +31,7 @@ public class Forklifter {
     private MysqlVetRepository mysqlVetRepository;
     private MysqlSpecialtyRepository mysqlSpecialtyRepository;
     private MysqlVisitRepository mysqlVisitRepository;
-    private MysqlPetTypesRepository mysqlPetTypesRepository;
+   // private MysqlPetTypesRepository mysqlPetTypesRepository;
 
 
     private PostgresOwnerRepository postgresOwnerRepository;
@@ -39,7 +39,7 @@ public class Forklifter {
     private PostgresVetRepository postgresVetRepository;
     private PostgresSpecialtyRepository postgresSpecialtyRepository;
     private PostgresVisitRepository postgresVisitRepository;
-    private PostgresPetTypesRepository postgresPetTypesRepository;
+    //private PostgresPetTypesRepository postgresPetTypesRepository;
 
 
     public Forklifter(MysqlOwnerRepository mysqlOwnerRepository, PostgresOwnerRepository postgresOwnerRepository, MysqlPetRepository mysqlPetRepository, PostgresPetRepository postgresPetRepository, MysqlVetRepository mysqlVetRepository, PostgresVetRepository postgresVetRepository, MysqlVisitRepository mysqlVisitRepository, PostgresVisitRepository postgresVisitRepository, MysqlSpecialtyRepository mysqlSpecialtyRepository, PostgresSpecialtyRepository postgresSpecialtyRepository, MysqlPetTypesRepository mysqlPetTypesRepository, PostgresPetTypesRepository postgresPetTypesRepository) {
@@ -53,8 +53,8 @@ public class Forklifter {
         this.postgresSpecialtyRepository = postgresSpecialtyRepository;
         this.mysqlVisitRepository = mysqlVisitRepository;
         this.postgresVisitRepository = postgresVisitRepository;
-        this.mysqlPetTypesRepository = mysqlPetTypesRepository;
-        this.postgresPetTypesRepository = postgresPetTypesRepository;
+       // this.mysqlPetTypesRepository = mysqlPetTypesRepository;
+        //this.postgresPetTypesRepository = postgresPetTypesRepository;
     }
 
     public void forklift() {
@@ -63,7 +63,7 @@ public class Forklifter {
         forkliftVets();
         forkliftVisits();
         forkliftSpecialties();
-        forkliftPetTypes();
+        //forkliftPetTypes();
     }
 
     public void forkliftOwners() {
@@ -92,8 +92,8 @@ public class Forklifter {
 
             postgresPet = new PostgresPet();
             postgresPet.setBirthDate(pet.getBirthDate());
-            postgresPet.setType(pet.getType());
-            postgresPet.setOwner(pet.getOwner());
+            //postgresPet.setType(pet.getType());
+            //postgresPet.setOwner(pet.getOwner());
             postgresPetRepository.save(postgresPet);
 
         }
@@ -108,7 +108,7 @@ public class Forklifter {
         for (Vet vet : vets) {
 
             postgresVet = new PostgresVet();
-            postgresVet.setSpecialtiesInternal(vet.getSpecialtiesInternal());
+            //postgresVet.setSpecialtiesInternal(vet.getSpecialtiesInternal());
             postgresVetRepository.save(postgresVet);
 
         }
