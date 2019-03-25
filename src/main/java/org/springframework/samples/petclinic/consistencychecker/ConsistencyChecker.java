@@ -138,6 +138,141 @@ public class ConsistencyChecker {
 
     }
 
+    public int petConsistencyChecker(){
+
+        List<Pet> petsSql = mysqlPetRepository.findPets();
+        List<PostgresPet> petsPost = postgresPetRepository.findPets();
+        int inconsistencyPets = 0;
+        for ( Pet petSql: petsSql)
+            for (PostgresPet petPost: petsPost) {
+
+                Integer idExpected = petSql.getId();
+                String nameExpected = petSql.getName();
+                LocalDate birthDateExpected = petSql.getBirthDate();
+                //PetType typeExpected = petSql.getType();
+                //Owner ownerExpected = petSql.getOwner();
+
+
+                Integer idActual = petPost.getId();
+                String nameActual = petPost.getName();
+                LocalDate birthDateActual = petPost.getBirthDate();
+                //PetType typeActual = petPost.getType();
+                //Owner ownerActual = petPost.getOwner();
+
+
+
+                if (!idExpected.equals(idActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    petPost.setId(idExpected);
+
+                }
+
+
+                if (!nameExpected.equals(nameActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    petPost.setName(nameExpected);
+
+                }
+
+                if (!birthDateExpected.equals(birthDateActual)) {
+                    inconsistencyPets++;
+
+                    //correct it
+
+                    petPost.setBirthDate(birthDateExpected);
+
+                }
+
+//                if (!typeExpected.equals(typeActual)) {
+//                    inconsistencyPets++;
+//
+//                    //correct it
+//
+//                    petPost.setType(typeExpected);
+//
+//                }
+//
+//                if (!ownerExpected.equals(ownerActual)) {
+//                    inconsistencyPets++;
+//
+//                    //correct it
+//
+//                    petPost.setOwner(ownerExpected);
+//
+//                }
+
+            }
+
+        System.out.println(inconsistencyPets);
+        return inconsistencyPets;
+
+    }
+
+
+    public int vetConsistencyChecker(){
+
+        List<Vet> vetsSql = mysqlVetRepository.findAll();
+        List<PostgresVet> vetsPost = postgresVetRepository.findAll();
+        int inconsistencyVets = 0;
+        for ( Vet vetSql: vetsSql)
+            for (PostgresVet vetPost: vetsPost) {
+
+                Integer idExpected = vetSql.getId();
+                String firstNameExpected = vetSql.getFirstName();
+                String lastNameExpected = vetSql.getLastName();
+                Set<Specialty> specialtiesExpected = (Set<Specialty>) vetSql.getSpecialties();
+
+
+                Integer idActual = vetPost.getId();
+                String firstNameActual = vetPost.getFirstName();
+                String lastNameActual = vetPost.getLastName();
+                List<PostgresSpecialty> specialtiesActual = vetPost.getSpecialties();
+
+
+                if (!idExpected.equals(idActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setId(idExpected);
+
+                }
+
+                if (!firstNameExpected.equals(firstNameActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setFirstName(firstNameExpected);
+                }
+
+                if (!lastNameExpected.equals(lastNameActual)) {
+                    inconsistencyVets++;
+
+                    //correct it
+
+                    vetPost.setLastName(lastNameExpected);
+                }
+
+//                if (!specialtiesExpected.equals(specialtiesActual)) {
+//                    inconsistencyVets++;
+//
+//                    //correct it
+//
+//                    vetPost.setSpecialtiesInternal(specialtiesExpected);
+//
+//                }
+
+            }
+        System.out.println(inconsistencyVets);
+        return inconsistencyVets;
+    }
 
 
     public int specialtiesConsistencyChecker(){
