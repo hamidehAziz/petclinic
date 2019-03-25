@@ -18,10 +18,12 @@ package org.springframework.samples.petclinic.postgres.repo;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
+import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
 import org.springframework.samples.petclinic.postgres.domain.PostgresVet;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant with Spring Data naming
@@ -40,8 +42,9 @@ public interface PostgresVetRepository extends Repository<PostgresVet, Integer> 
      * @return a <code>Collection</code> of <code>Vet</code>s
      */
     @Transactional(readOnly = true)
-    Collection<PostgresVet> findAll() throws DataAccessException;
+    List<PostgresVet> findAll() throws DataAccessException;
 
     void save(PostgresVet vet);
+
 
 }
