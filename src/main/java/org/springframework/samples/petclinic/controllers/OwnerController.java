@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.controllers;
 
 import org.springframework.samples.petclinic.mysql.domain.Owner;
 import org.springframework.samples.petclinic.mysql.repo.MysqlOwnerRepository;
+import org.springframework.samples.petclinic.postgres.domain.PostgresOwner;
 import org.springframework.samples.petclinic.postgres.repo.PostgresOwnerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,6 +69,10 @@ public class OwnerController {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
             this.owners.save(owner);
+
+            // shadow write
+            this.shadowWrite(owner);
+
             return "redirect:/owners/" + owner.getId();
         }
     }
@@ -117,6 +122,10 @@ public class OwnerController {
         } else {
             owner.setId(ownerId);
             this.owners.save(owner);
+
+            // shadow write
+            this.shadowWrite(owner);
+
             return "redirect:/owners/{ownerId}";
         }
     }
@@ -132,6 +141,18 @@ public class OwnerController {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(this.owners.findById(ownerId));
         return mav;
+    }
+
+    private void shadowWrite(Owner owner) {
+        PostgresOwner postgresOwner = new PostgresOwner();
+        postgresOwner.setId(owner.getId());
+        postgresOwner.setAddress(owner.getAddress());
+        postgresOwner.setCity(owner.getCity());
+        postgresOwner.setTelephone(owner.getTelephone());
+        postgresOwner.setFirstName(owner.getFirstName());
+        postgresOwner.setLastName(owner.getLastName());
+        //postgresOwner.setPets(owner.getPets());
+        this.newOwners.save(postgresOwner);
     }
 
 }
