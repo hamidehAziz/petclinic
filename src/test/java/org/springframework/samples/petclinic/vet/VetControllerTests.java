@@ -96,7 +96,7 @@ public class VetControllerTests {
 
     @Test
     public void testRandom(){
-        int iterations = 100;
+        int iterations = 1000;
         VetController vetController = new VetController(vets);
         AssignRandomRequirement assignRandomRequirement = new AssignRandomRequirement();
 
