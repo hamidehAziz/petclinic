@@ -93,4 +93,26 @@ public class VetControllerTests {
         VetToggles.insuranceRequired  = true;
         assertEquals("vets/vetListInsurance", vetController.showVetList(model));
     }
+
+    @Test
+    public void testRandom(){
+        int iterations = 100;
+        VetController vetController = new VetController(vets);
+        AssignRandomRequirement assignRandomRequirement = new AssignRandomRequirement();
+
+        for(int i = 0; i < iterations; i++){
+            VetToggles.insuranceRequired = assignRandomRequirement.getInsurance(Boolean.TRUE);
+            model.put("vets", vets);
+            vetController.showVetList(model);
+            //new feature is on, see insurance page
+            if(VetToggles.insuranceRequired == true) {
+                vetController.countVetListInsurance();
+            }
+            else {
+                vetController.countvetList();
+            }
+        }
+        System.out.println(vetController.getCountVetList());
+        System.out.println(vetController.getCountVetListInsurance());
+    }
 }
