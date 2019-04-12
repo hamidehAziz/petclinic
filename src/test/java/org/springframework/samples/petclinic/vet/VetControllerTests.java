@@ -37,7 +37,7 @@ public class VetControllerTests {
     private VetRepository vets;
     private PetRepository petRepository;
 
-   @Mock Map<String, Object> model;
+    @Mock Map<String, Object> model;
 
 
     @Before
@@ -59,12 +59,6 @@ public class VetControllerTests {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model = new HashMap<>();
-    }
-
-
-    @Before
-    public void setUp () throws Exception{
-
     }
 
     @Test
