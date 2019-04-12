@@ -43,7 +43,10 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        return "vets/vetList";
+        if(VetToggles.insuranceRequired == true)
+        {return "vets/vetListInsurance";}
+        else
+        {return "vets/vetList";}
     }
 
     @GetMapping({ "/vets" })
