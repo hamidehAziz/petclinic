@@ -31,6 +31,8 @@ import java.util.Map;
 class VetController {
 
     private final VetRepository vets;
+    private int vetList = 0;
+    private int vetListInsurance = 0;
 
     public VetController(VetRepository clinicService) {
         this.vets = clinicService;
@@ -43,7 +45,10 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        return "vets/vetList";
+        if(VetToggles.insuranceRequired == true)
+        {return "vets/vetListInsurance";}
+        else
+        {return "vets/vetList";}
     }
 
     @GetMapping({ "/vets" })
@@ -55,4 +60,9 @@ class VetController {
         return vets;
     }
 
+
+    public void countvetList(){vetList++;}
+    public void countVetListInsurance(){vetListInsurance++;}
+    public int getCountVetList(){return vetList;}
+    public int getCountVetListInsurance(){return vetListInsurance;}
 }

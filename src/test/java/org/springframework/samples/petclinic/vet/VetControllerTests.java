@@ -1,24 +1,27 @@
 package org.springframework.samples.petclinic.vet;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.samples.petclinic.owner.PetRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the {@link VetController}
@@ -32,6 +35,10 @@ public class VetControllerTests {
 
     @MockBean
     private VetRepository vets;
+    private PetRepository petRepository;
+
+    @Mock Map<String, Object> model;
+
 
     @Before
     public void setup() {
@@ -48,6 +55,10 @@ public class VetControllerTests {
         radiology.setName("radiology");
         helen.addSpecialty(radiology);
         given(this.vets.findAll()).willReturn(Lists.newArrayList(james, helen));
+        petRepository = mock(PetRepository.class);
+        Vets vets = new Vets();
+        vets.getVetList().addAll(this.vets.findAll());
+        model = new HashMap<>();
     }
 
     @Test
@@ -55,7 +66,7 @@ public class VetControllerTests {
         mockMvc.perform(get("/vets.html"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("vets"))
-            .andExpect(view().name("vets/vetList"));
+            .andExpect(view().name("vets/vetListInsurance"));
     }
 
     @Test
@@ -66,4 +77,42 @@ public class VetControllerTests {
             .andExpect(jsonPath("$.vetList[0].id").value(1));
     }
 
+    @Test
+    public void testRollback(){
+        model.put("vets", vets);
+        VetController vetController = new VetController(vets);
+        //new feature is on, see insurance page
+        VetToggles.insuranceRequired = true;
+        assertEquals("vets/vetListInsurance", vetController.showVetList(model));
+
+        //new feature is off
+        VetToggles.insuranceRequired  = false;
+        assertEquals("vets/vetList", vetController.showVetList(model));
+
+        //new feature is on again, see insurance page
+        VetToggles.insuranceRequired  = true;
+        assertEquals("vets/vetListInsurance", vetController.showVetList(model));
+    }
+
+    @Test
+    public void testRandom(){
+        int iterations = 1000;
+        VetController vetController = new VetController(vets);
+        AssignRandomRequirement assignRandomRequirement = new AssignRandomRequirement();
+
+        for(int i = 0; i < iterations; i++){
+            VetToggles.insuranceRequired = assignRandomRequirement.getInsurance(Boolean.TRUE);
+            model.put("vets", vets);
+            vetController.showVetList(model);
+            //new feature is on, see insurance page
+            if(VetToggles.insuranceRequired == true) {
+                vetController.countVetListInsurance();
+            }
+            else {
+                vetController.countvetList();
+            }
+        }
+        System.out.println(vetController.getCountVetList());
+        System.out.println(vetController.getCountVetListInsurance());
+    }
 }
