@@ -38,6 +38,7 @@ public class VetControllerTests {
     @MockBean
     private VetRepository vets;
     private PetRepository petRepository;
+    private AssignRandomRequirement assignRandomRequirement;
 
     @Mock Map<String, Object> model;
 
@@ -102,7 +103,7 @@ public class VetControllerTests {
         VetController vetController = new VetController(vets);
 
         for(int i = 0; i < iterations; i++){
-            Toggles.insuranceRequired = AssignRandomRequirement.getRandom(Boolean.TRUE);
+            Toggles.insuranceRequired = assignRandomRequirement.getInsurance(60);
             model.put("vets", vets);
             vetController.showVetList(model);
             //new feature is on, see insurance page
