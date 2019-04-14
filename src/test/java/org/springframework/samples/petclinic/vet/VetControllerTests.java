@@ -112,6 +112,7 @@ public class VetControllerTests {
             else {
                 vetController.countvetList();
             }
+            vetController.loggingAccess();
         }
         System.out.println(vetController.getCountVetList());
         System.out.println(vetController.getCountVetListInsurance());
