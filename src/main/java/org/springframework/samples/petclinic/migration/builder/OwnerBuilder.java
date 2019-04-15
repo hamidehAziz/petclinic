@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.builder;
+package org.springframework.samples.petclinic.migration.builder;
 
 import org.springframework.samples.petclinic.owner.Owner;
 

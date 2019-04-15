@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerMigrator {
+public class OwnerConverter {
 
-    private static Owner ownerConverter(ResultSet resultSet) throws SQLException {
+    public  Owner ownerConverter(ResultSet resultSet) throws SQLException {
         return OwnerBuilder.buildOwner(
             resultSet.getInt("id"),
             resultSet.getString("first_name"),
@@ -21,7 +21,7 @@ public class OwnerMigrator {
         );
     }
 
-    private static List<Owner> convertToOwners(ResultSet resultSet) throws SQLException {
+    public List<Owner> ownerListConverter(ResultSet resultSet) throws SQLException {
         List<Owner> owners = new ArrayList<>();
 
         while (resultSet.next()) {

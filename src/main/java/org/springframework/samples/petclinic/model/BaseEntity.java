@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.io.Serializable;
 
 import javax.persistence.GeneratedValue;

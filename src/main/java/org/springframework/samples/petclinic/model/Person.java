@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;

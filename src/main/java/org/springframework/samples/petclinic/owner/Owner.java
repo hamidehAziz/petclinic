@@ -28,7 +28,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import javax.xml.ws.ServiceMode;
 
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
@@ -42,6 +45,8 @@ import org.springframework.samples.petclinic.model.Person;
  * @author Sam Brannen
  * @author Michael Isvy
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
