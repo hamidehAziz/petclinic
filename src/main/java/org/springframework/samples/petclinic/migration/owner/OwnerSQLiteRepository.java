@@ -150,7 +150,7 @@ public class OwnerSQLiteRepository {
 
     public int consistencyChecker(List<Owner> owners){
         AtomicInteger inconsistencyCounter = new AtomicInteger();
-        log.info("Consistency checker for owners");
+        //log.info("Consistency checker for owners");
         List<Owner> updatedOwners;
         try{
             updatedOwners = findAll();
@@ -165,7 +165,7 @@ public class OwnerSQLiteRepository {
                 Owner newOwnerDb = findById(oldOwner.getId()).orElse(new Owner());
                 if (!consistentOwners(oldOwner, newOwnerDb)){
                     inconsistencyCounter.getAndIncrement();
-                    logger.info("inconsistency found, inconsistency count :" + inconsistencyCounter);
+                    //logger.info("inconsistency found, inconsistency count :" + inconsistencyCounter);
                     saveOrUpdate(oldOwner, "update");
                 }
             }catch (SQLException e){
