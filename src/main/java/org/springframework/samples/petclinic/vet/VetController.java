@@ -73,6 +73,19 @@ class VetController {
 
     }
 
+    @GetMapping("/promotionB.html")
+    public String showPromotionB(){
+
+        if (VetToggles.togglePromotionB == true)
+        {
+            return "promo/promotionB.html";
+        } else {
+            throw new RuntimeException("No promotions");
+        }
+
+
+    }
+
 
     public void countvetList(){vetList++;}
     public void countVetListInsurance(){vetListInsurance++;}
