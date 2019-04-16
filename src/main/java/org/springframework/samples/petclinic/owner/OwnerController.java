@@ -71,7 +71,11 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
-        return "owners/findOwners";
+        if (OwnerToggles.addOwnerRequired){
+        return "owners/findOwners";}
+        else {
+            return "owners/findOwnerWithoutAdd";
+        }
     }
 
     @GetMapping("/owners")
@@ -87,7 +91,11 @@ class OwnerController {
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
-            return "owners/findOwners";
+            if (OwnerToggles.addOwnerRequired){
+                return "owners/findOwners";}
+            else {
+                return "owners/findOwnerWithoutAdd";
+            }
         } else if (results.size() == 1) {
             // 1 owner found
             owner = results.iterator().next();
