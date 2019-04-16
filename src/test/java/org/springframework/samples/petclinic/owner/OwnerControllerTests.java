@@ -13,21 +13,18 @@ import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.petclinic.owner.OwnerController;
+import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-
-
 import static org.junit.Assert.assertEquals;
-import org.mockito.Mock;
-import org.springframework.validation.BindingResult;
+
 
 /**
  * Test class for {@link OwnerController}
@@ -46,11 +43,9 @@ public class OwnerControllerTests {
     @MockBean
     private OwnerRepository owners;
 
-    @Mock Map<String, Object> model;
-
-
     private Owner george;
 
+    @Mock Map<String, Object> model;
 
     @Before
     public void setup() {
@@ -62,7 +57,6 @@ public class OwnerControllerTests {
         george.setCity("Madison");
         george.setTelephone("6085551023");
         given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
-        model = new HashMap<>();
     }
 
     @Test
@@ -207,5 +201,26 @@ public class OwnerControllerTests {
         assertEquals("owners/findOwners", ownerController.initFindForm(model));
     }
 
+    @Test
+    public void testRandomAddOwner(){
+        int iterations = 1000;
+        OwnerController ownerController = new OwnerController(owners);
+        RandomRequirement assignRandomRequirement = new RandomRequirement();
+
+        for(int i = 0; i < iterations; i++){
+            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(Boolean.TRUE);
+            model.put("owners", owners);
+            ownerController.initFindForm(model);
+            //new feature is on, see insurance page
+            if(OwnerToggles.addOwnerRequired == true) {
+                ownerController.countAddOwner();
+            }
+            else {
+                ownerController.countNoAddOwner();
+            }
+        }
+        System.out.println(ownerController.getCountAddOwner());
+        System.out.println(ownerController.getCountNoAddOwner());
+    }
 
 }

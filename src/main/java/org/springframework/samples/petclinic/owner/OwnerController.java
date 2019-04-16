@@ -40,6 +40,8 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
+    private int addOwner = 0;
+    private int noAddOwner = 0;
 
 
     public OwnerController(OwnerRepository clinicService) {
@@ -85,18 +87,18 @@ class OwnerController {
         if (owner.getLastName() == null) {
             owner.setLastName(""); // empty string signifies broadest possible search
         }
-
         // find owners by last name
         Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
-        if (results.isEmpty()) {
+        if (results.isEmpty() && OwnerToggles.addOwnerRequired) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
-            if (OwnerToggles.addOwnerRequired){
                 return "owners/findOwners";}
-            else {
-                return "owners/findOwnerWithoutAdd";
-            }
-        } else if (results.size() == 1) {
+        else if (results.isEmpty() && !OwnerToggles.addOwnerRequired) {
+            // no owners found
+            result.rejectValue("lastName", "notFound", "not found");
+            return "owners/findOwners";}
+
+         else if (results.size() == 1) {
             // 1 owner found
             owner = results.iterator().next();
             return "redirect:/owners/" + owner.getId();
@@ -137,5 +139,10 @@ class OwnerController {
         mav.addObject(this.owners.findById(ownerId));
         return mav;
     }
+
+    public void countAddOwner(){addOwner++;}
+    public void countNoAddOwner(){noAddOwner++;}
+    public int getCountAddOwner(){return addOwner;}
+    public int getCountNoAddOwner(){return noAddOwner;}
 
 }
