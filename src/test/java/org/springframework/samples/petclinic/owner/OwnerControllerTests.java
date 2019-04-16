@@ -16,11 +16,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerController;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+
+import static org.junit.Assert.assertEquals;
+import org.mockito.Mock;
+import org.springframework.validation.BindingResult;
 
 /**
  * Test class for {@link OwnerController}
@@ -39,7 +46,11 @@ public class OwnerControllerTests {
     @MockBean
     private OwnerRepository owners;
 
+    @Mock Map<String, Object> model;
+
+
     private Owner george;
+
 
     @Before
     public void setup() {
@@ -51,6 +62,7 @@ public class OwnerControllerTests {
         george.setCity("Madison");
         george.setTelephone("6085551023");
         given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
+        model = new HashMap<>();
     }
 
     @Test
@@ -175,5 +187,25 @@ public class OwnerControllerTests {
             .andExpect(model().attribute("owner", hasProperty("telephone", is("6085551023"))))
             .andExpect(view().name("owners/ownerDetails"));
     }
+
+    @Test
+    public void testRollbackInitFindForm(){
+        model.put("owners", owners);
+        OwnerController ownerController = new OwnerController(owners);
+
+        //new feature is on, Add Owner feature exists
+        OwnerToggles.addOwnerRequired = true;
+        assertEquals("owners/findOwners", ownerController.initFindForm(model));
+
+        //new feature is off, Add Owner feature doesn't exist
+        OwnerToggles.addOwnerRequired = false;
+        assertEquals("owners/findOwnerWithoutAdd", ownerController.initFindForm(model));
+
+        //new feature is on again,Add Owner feature exists
+
+        OwnerToggles.addOwnerRequired = true;
+        assertEquals("owners/findOwners", ownerController.initFindForm(model));
+    }
+
 
 }
