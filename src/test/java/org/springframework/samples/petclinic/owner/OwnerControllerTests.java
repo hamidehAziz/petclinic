@@ -208,7 +208,7 @@ public class OwnerControllerTests {
         RandomRequirement assignRandomRequirement = new RandomRequirement();
 
         for(int i = 0; i < iterations; i++){
-            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(Boolean.TRUE);
+            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(60);
             model.put("owners", owners);
             ownerController.initFindForm(model);
             //new feature is on, see insurance page
@@ -218,6 +218,7 @@ public class OwnerControllerTests {
             else {
                 ownerController.countNoAddOwner();
             }
+            ownerController.loggingAccess();
         }
         System.out.println(ownerController.getCountAddOwner());
         System.out.println(ownerController.getCountNoAddOwner());

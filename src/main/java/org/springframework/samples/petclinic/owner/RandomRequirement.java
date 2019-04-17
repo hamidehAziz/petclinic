@@ -3,12 +3,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomRequirement {
 
-    public RandomRequirement(){ }
-    public boolean getAddOwner(Boolean value){
-        Boolean required = ThreadLocalRandom.current().nextBoolean();
-        if(value == required)
+    public RandomRequirement() {
+    }
+
+    public boolean getAddOwner(int proportionWithAdd) {
+        int rnd = ThreadLocalRandom.current().nextInt(1, 101);
+
+        if (proportionWithAdd >= rnd) {
             return true;
-        else
-            return false;
+        }
+
+        return false;
     }
 }
