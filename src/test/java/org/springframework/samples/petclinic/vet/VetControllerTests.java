@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.owner.PetRepository;
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -82,15 +83,15 @@ public class VetControllerTests {
         model.put("vets", vets);
         VetController vetController = new VetController(vets);
         //new feature is on, see insurance page
-        VetToggles.insuranceRequired = true;
+        Toggles.insuranceRequired = true;
         assertEquals("vets/vetListInsurance", vetController.showVetList(model));
 
         //new feature is off
-        VetToggles.insuranceRequired  = false;
+        Toggles.insuranceRequired  = false;
         assertEquals("vets/vetList", vetController.showVetList(model));
 
         //new feature is on again, see insurance page
-        VetToggles.insuranceRequired  = true;
+        Toggles.insuranceRequired  = true;
         assertEquals("vets/vetListInsurance", vetController.showVetList(model));
     }
 
@@ -101,11 +102,11 @@ public class VetControllerTests {
         AssignRandomRequirement assignRandomRequirement = new AssignRandomRequirement();
 
         for(int i = 0; i < iterations; i++){
-            VetToggles.insuranceRequired = assignRandomRequirement.getInsurance(Boolean.TRUE);
+            Toggles.insuranceRequired = assignRandomRequirement.getInsurance(Boolean.TRUE);
             model.put("vets", vets);
             vetController.showVetList(model);
             //new feature is on, see insurance page
-            if(VetToggles.insuranceRequired == true) {
+            if(Toggles.insuranceRequired) {
                 vetController.countVetListInsurance();
             }
             else {

@@ -6,9 +6,6 @@ public class AssignRandomRequirement {
     public AssignRandomRequirement(){ }
     public boolean getInsurance(Boolean value){
         Boolean required = ThreadLocalRandom.current().nextBoolean();
-        if(value == required)
-            return true;
-        else
-            return false;
+        return value == required;
     }
 }

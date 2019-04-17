@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,7 +78,7 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
-        if (OwnerToggles.addOwnerRequired){
+        if (Toggles.addOwnerRequired){
         return "owners/findOwners";}
         else {
             return "owners/findOwnerWithoutAdd";
@@ -93,11 +94,11 @@ class OwnerController {
         }
         // find owners by last name
         Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
-        if (results.isEmpty() && OwnerToggles.addOwnerRequired) {
+        if (results.isEmpty() && Toggles.addOwnerRequired) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
                 return "owners/findOwners";}
-        else if (results.isEmpty() && !OwnerToggles.addOwnerRequired) {
+        else if (results.isEmpty() && !Toggles.addOwnerRequired) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";}
