@@ -208,7 +208,7 @@ public class OwnerControllerTests {
         RandomRequirement assignRandomRequirement = new RandomRequirement();
 
         for(int i = 0; i < iterations; i++){
-            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(60);
+            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(70);
             model.put("owners", owners);
             ownerController.initFindForm(model);
             //new feature is on, see insurance page
