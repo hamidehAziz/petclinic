@@ -218,6 +218,7 @@ public class OwnerControllerTests {
             else {
                 ownerController.countNoAddOwner();
             }
+            ownerController.loggingAccess();
         }
         System.out.println(ownerController.getCountAddOwner());
         System.out.println(ownerController.getCountNoAddOwner());

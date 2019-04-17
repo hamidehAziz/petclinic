@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -42,6 +45,7 @@ class OwnerController {
     private final OwnerRepository owners;
     private int addOwner = 0;
     private int noAddOwner = 0;
+    private Logger logger = LogManager.getLogger("OwnerController");
 
 
     public OwnerController(OwnerRepository clinicService) {
@@ -138,6 +142,13 @@ class OwnerController {
         ModelAndView mav = new ModelAndView("owners/ownerDetails");
         mav.addObject(this.owners.findById(ownerId));
         return mav;
+    }
+
+    public void loggingAccess(){
+        logger.info("Page with no Add Owner acessed: "+ noAddOwner);
+        logger.info("Page with Add Owner accessed: "+ addOwner);
+
+
     }
 
     public void countAddOwner(){addOwner++;}
