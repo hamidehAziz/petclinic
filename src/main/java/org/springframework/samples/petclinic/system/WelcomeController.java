@@ -16,7 +16,7 @@ class WelcomeController {
 
     @GetMapping("/")
     public String welcome() {
-        if (!Toggles.newWelcomePage){
+        if (Toggles.newWelcomePage){
             return "bilingualWelcome";
         }
         return "welcome";
