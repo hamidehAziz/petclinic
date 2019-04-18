@@ -46,7 +46,7 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        if(Toggles.insuranceRequired == true)
+        if(Toggles.insuranceRequired)
         {return "vets/vetListInsurance";}
         else
         {return "vets/vetList";}

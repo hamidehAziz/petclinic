@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.owner.PetRepository;
+import org.springframework.samples.petclinic.system.AssignRandomRequirement;
 import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -99,10 +100,9 @@ public class VetControllerTests {
     public void testRandom(){
         int iterations = 1000;
         VetController vetController = new VetController(vets);
-        AssignRandomRequirement assignRandomRequirement = new AssignRandomRequirement();
 
         for(int i = 0; i < iterations; i++){
-            Toggles.insuranceRequired = assignRandomRequirement.getInsurance(Boolean.TRUE);
+            Toggles.insuranceRequired = AssignRandomRequirement.getRandom(Boolean.TRUE);
             model.put("vets", vets);
             vetController.showVetList(model);
             //new feature is on, see insurance page
