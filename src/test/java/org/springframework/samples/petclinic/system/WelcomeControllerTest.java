@@ -47,8 +47,5 @@ public class WelcomeControllerTest {
                 welcomeController.incrementWelcomePageCounter();
             }
         }
-
-        System.out.println("Bilingual welcome page was loaded: " + welcomeController.getBiligualPageCount() + " times");
-        System.out.println("Regular welcome page was loaded: " + welcomeController.getWelcomePageCount() + " times");
     }
 }
