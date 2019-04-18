@@ -19,9 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebMvcTest(controllers = WelcomeControllerTest.class)
 public class WelcomeControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @Test
     public void testRollBackWelcomePage(){
         WelcomeController welcomeController = new WelcomeController();
@@ -45,7 +42,7 @@ public class WelcomeControllerTest {
             Toggles.newWelcomePage = AssignRandomRequirement.getRandom(Boolean.TRUE);
 
             welcomeController.welcome();
-            //new feature is on, see insurance page
+            //new feature is on, see welcome page
             if(Toggles.newWelcomePage) {
                 welcomeController.incrementBilingualPageCounter();
             }
