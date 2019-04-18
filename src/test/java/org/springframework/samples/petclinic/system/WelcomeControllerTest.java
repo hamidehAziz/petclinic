@@ -35,4 +35,26 @@ public class WelcomeControllerTest {
         assertEquals("bilingualWelcome", welcomeController.welcome());
     }
 
+    @Test
+    public void testRandomWelcomePage(){
+        int iterations = 1000;
+        WelcomeController welcomeController = new WelcomeController();
+
+
+        for(int i = 0; i < iterations; i++){
+            Toggles.newWelcomePage = AssignRandomRequirement.getRandom(Boolean.TRUE);
+
+            welcomeController.welcome();
+            //new feature is on, see insurance page
+            if(Toggles.newWelcomePage) {
+                welcomeController.incrementBilingualPageCounter();
+            }
+            else {
+                welcomeController.incrementWelcomePageCounter();
+            }
+        }
+
+        System.out.println("Bilingual welcome page was loaded: " + welcomeController.getBiligualPageCount() + " times");
+        System.out.println("Regular welcome page was loaded: " + welcomeController.getWelcomePageCount() + " times");
+    }
 }
