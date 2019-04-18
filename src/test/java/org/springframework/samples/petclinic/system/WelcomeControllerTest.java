@@ -37,7 +37,6 @@ public class WelcomeControllerTest {
         int iterations = 1000;
         WelcomeController welcomeController = new WelcomeController();
 
-
         for(int i = 0; i < iterations; i++){
             Toggles.newWelcomePage = AssignRandomRequirement.getRandom(Boolean.TRUE);
 
