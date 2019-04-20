@@ -38,6 +38,9 @@ public class Person extends BaseEntity {
     @Column(name = "insurance")
     private String insurance;
 
+    @Column(name = "availability")
+    private String available;
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -58,4 +61,7 @@ public class Person extends BaseEntity {
 
     public void setInsurance(String insurance) { this.insurance = insurance; }
 
+    public String getAvailable() { return available; }
+
+    public void setAvailable(String insurance) { this.available = available; }
 }

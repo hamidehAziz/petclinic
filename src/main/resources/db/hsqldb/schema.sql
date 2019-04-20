@@ -12,6 +12,7 @@ CREATE TABLE vets (
   first_name VARCHAR(30),
   last_name  VARCHAR(30),
   insurance VARCHAR(30),
+  available VARCHAR (30),
 );
 CREATE INDEX vets_last_name ON vets (last_name);
 

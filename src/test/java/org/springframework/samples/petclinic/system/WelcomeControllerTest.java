@@ -32,20 +32,20 @@ public class WelcomeControllerTest {
         assertEquals("bilingualWelcome", welcomeController.welcome());
     }
 
-    @Test
-    public void testRandomWelcomePage() {
-        int iterations = 1000;
-
-        for (int i = 0; i < iterations; i++) {
-            Toggles.newWelcomePage = AssignRandomRequirement.getRandom(Boolean.TRUE);
-
-            welcomeController.welcome();
-            //new feature is on, see welcome page
-            if (Toggles.newWelcomePage) {
-                welcomeController.incrementBilingualPageCounter();
-            } else {
-                welcomeController.incrementWelcomePageCounter();
-            }
-        }
-    }
+//    @Test
+//    public void testRandomWelcomePage() {
+//        int iterations = 1000;
+//
+//        for (int i = 0; i < iterations; i++) {
+//            Toggles.newWelcomePage = AssignRandomRequirement.getRandom(Boolean.TRUE);
+//
+//            welcomeController.welcome();
+//            //new feature is on, see welcome page
+//            if (Toggles.newWelcomePage) {
+//                welcomeController.incrementBilingualPageCounter();
+//            } else {
+//                welcomeController.incrementWelcomePageCounter();
+//            }
+//        }
+//    }
 }
