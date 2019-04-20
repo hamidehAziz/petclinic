@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +46,7 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        if(VetToggles.insuranceRequired == true)
+        if(Toggles.insuranceRequired)
         {return "vets/vetListInsurance";}
         else
         {return "vets/vetList";}

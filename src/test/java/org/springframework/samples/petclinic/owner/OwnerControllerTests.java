@@ -20,6 +20,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerController;
 import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Map;
@@ -188,16 +189,16 @@ public class OwnerControllerTests {
         OwnerController ownerController = new OwnerController(owners);
 
         //new feature is on, Add Owner feature exists
-        OwnerToggles.addOwnerRequired = true;
+        Toggles.addOwnerRequired = true;
         assertEquals("owners/findOwners", ownerController.initFindForm(model));
 
         //new feature is off, Add Owner feature doesn't exist
-        OwnerToggles.addOwnerRequired = false;
+        Toggles.addOwnerRequired = false;
         assertEquals("owners/findOwnerWithoutAdd", ownerController.initFindForm(model));
 
         //new feature is on again,Add Owner feature exists
 
-        OwnerToggles.addOwnerRequired = true;
+        Toggles.addOwnerRequired = true;
         assertEquals("owners/findOwners", ownerController.initFindForm(model));
     }
 
@@ -208,11 +209,11 @@ public class OwnerControllerTests {
         RandomRequirement assignRandomRequirement = new RandomRequirement();
 
         for(int i = 0; i < iterations; i++){
-            OwnerToggles.addOwnerRequired = assignRandomRequirement.getAddOwner(70);
+            Toggles.addOwnerRequired = assignRandomRequirement.getAddOwner(70);
             model.put("owners", owners);
             ownerController.initFindForm(model);
             //new feature is on, see insurance page
-            if(OwnerToggles.addOwnerRequired == true) {
+            if(Toggles.addOwnerRequired) {
                 ownerController.countAddOwner();
             }
             else {
