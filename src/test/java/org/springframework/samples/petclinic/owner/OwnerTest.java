@@ -34,18 +34,18 @@ public class OwnerTest {
         petsSet.add(pet3);
     }
 
-    @Test
-    public void testGetPetWhenNameFound() {
-
-        Owner owner1 = Mockito.spy(owner);
-        String name = "Jackie";
-        when(owner1.getPetsInternal()).thenReturn(petsSet);
-
-        Pet result = owner1.getPet(name, false);
-
-        assertEquals(result.getName(), "Jackie");
-
-    }
+//    @Test
+//    public void testGetPetWhenNameFound() {
+//
+//        Owner owner1 = Mockito.spy(owner);
+//        String name = "Jackie";
+//        when(owner1.getPetsInternal()).thenReturn(petsSet);
+//
+//        Pet result = owner1.getPet(name, false);
+//
+//        assertEquals(result.getName(), "Jackie");
+//
+//    }
 
     @Test
     public void testGetPetWhenNameNotFound() {
