@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS vets (
   first_name VARCHAR(30),
   last_name VARCHAR(30),
   insurance VARCHAR(30),
+  available VARCHAR(30),
   INDEX(last_name)
 ) engine=InnoDB;
 

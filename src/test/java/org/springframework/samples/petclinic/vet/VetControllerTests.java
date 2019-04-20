@@ -69,7 +69,9 @@ public class VetControllerTests {
         mockMvc.perform(get("/vets.html"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("vets"))
-            .andExpect(view().name("vets/vetListInsurance"));
+            .andExpect(view().name("vets/vetListInsurance"))
+            .andExpect(view().name("vets/vetAvailable"));
+
     }
 
     @Test
@@ -92,10 +94,22 @@ public class VetControllerTests {
         Toggles.insuranceRequired  = false;
         assertEquals("vets/vetList", vetController.showVetList(model));
 
-        //new feature is on again, see insurance page
+        //new feature is on again, see available page
         Toggles.insuranceRequired  = true;
         assertEquals("vets/vetListInsurance", vetController.showVetList(model));
-    }
+
+
+        Toggles.availableRequired = true;
+        assertEquals("vets/vetAvailable", vetController.showVetList(model));
+
+        //new feature is off
+        Toggles.availableRequired  = false;
+        assertEquals("vets/vetList", vetController.showVetList(model));
+
+        //new feature is on again, see insurance page
+        Toggles.availableRequired  = true;
+        assertEquals("vets/vetAvailable", vetController.showVetList(model));
+}
 
     @Test
     public void testRandom(){

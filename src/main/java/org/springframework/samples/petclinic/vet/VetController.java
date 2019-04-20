@@ -60,6 +60,19 @@ class VetController {
             logger.info("Insurance is not shown");
             return "vets/vetList";
         }
+
+        if(Toggles.availableRequired == true)
+        {
+            logger.info("Availability is shown");
+            return "vets/vetListAvailable";
+        }
+        else
+        {
+            logger.info("Availability is not shown");
+            return "vets/vetList";
+        }
+
+
     }
 
     @GetMapping({ "/vets" })
