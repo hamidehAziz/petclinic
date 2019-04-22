@@ -13,14 +13,19 @@ import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.owner.OwnerController;
 import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import java.util.Map;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Test class for {@link OwnerController}
@@ -40,6 +45,8 @@ public class OwnerControllerTests {
     private OwnerRepository owners;
 
     private Owner george;
+
+    @Mock Map<String, Object> model;
 
     @Before
     public void setup() {
@@ -174,6 +181,48 @@ public class OwnerControllerTests {
             .andExpect(model().attribute("owner", hasProperty("city", is("Madison"))))
             .andExpect(model().attribute("owner", hasProperty("telephone", is("6085551023"))))
             .andExpect(view().name("owners/ownerDetails"));
+    }
+
+    @Test
+    public void testRollbackInitFindForm(){
+        model.put("owners", owners);
+        OwnerController ownerController = new OwnerController(owners);
+
+        //new feature is on, Add Owner feature exists
+        Toggles.addOwnerRequired = true;
+        assertEquals("owners/findOwners", ownerController.initFindForm(model));
+
+        //new feature is off, Add Owner feature doesn't exist
+        Toggles.addOwnerRequired = false;
+        assertEquals("owners/findOwnerWithoutAdd", ownerController.initFindForm(model));
+
+        //new feature is on again,Add Owner feature exists
+
+        Toggles.addOwnerRequired = true;
+        assertEquals("owners/findOwners", ownerController.initFindForm(model));
+    }
+
+    @Test
+    public void testRandomAddOwner(){
+        int iterations = 1000;
+        OwnerController ownerController = new OwnerController(owners);
+        RandomRequirement assignRandomRequirement = new RandomRequirement();
+
+        for(int i = 0; i < iterations; i++){
+            Toggles.addOwnerRequired = assignRandomRequirement.getAddOwner(70);
+            model.put("owners", owners);
+            ownerController.initFindForm(model);
+            //new feature is on, see insurance page
+            if(Toggles.addOwnerRequired) {
+                ownerController.countAddOwner();
+            }
+            else {
+                ownerController.countNoAddOwner();
+            }
+            ownerController.loggingAccess();
+        }
+        System.out.println(ownerController.getCountAddOwner());
+        System.out.println(ownerController.getCountNoAddOwner());
     }
 
 }

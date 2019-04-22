@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.samples.petclinic.system.toggles.Toggles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -40,6 +44,9 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
+    private int addOwner = 0;
+    private int noAddOwner = 0;
+    private Logger logger = LogManager.getLogger("OwnerController");
 
 
     public OwnerController(OwnerRepository clinicService) {
@@ -71,7 +78,11 @@ class OwnerController {
     @GetMapping("/owners/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("owner", new Owner());
-        return "owners/findOwners";
+        if (Toggles.addOwnerRequired){
+        return "owners/findOwners";}
+        else {
+            return "owners/findOwnerWithoutAdd";
+        }
     }
 
     @GetMapping("/owners")
@@ -81,14 +92,18 @@ class OwnerController {
         if (owner.getLastName() == null) {
             owner.setLastName(""); // empty string signifies broadest possible search
         }
-
         // find owners by last name
         Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
-        if (results.isEmpty()) {
+        if (results.isEmpty() && Toggles.addOwnerRequired) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
-            return "owners/findOwners";
-        } else if (results.size() == 1) {
+                return "owners/findOwners";}
+        else if (results.isEmpty() && !Toggles.addOwnerRequired) {
+            // no owners found
+            result.rejectValue("lastName", "notFound", "not found");
+            return "owners/findOwners";}
+
+         else if (results.size() == 1) {
             // 1 owner found
             owner = results.iterator().next();
             return "redirect:/owners/" + owner.getId();
@@ -129,5 +144,17 @@ class OwnerController {
         mav.addObject(this.owners.findById(ownerId));
         return mav;
     }
+
+    public void loggingAccess(){
+        logger.info("Page with no Add Owner acessed: "+ noAddOwner);
+        logger.info("Page with Add Owner accessed: "+ addOwner);
+
+
+    }
+
+    public void countAddOwner(){addOwner++;}
+    public void countNoAddOwner(){noAddOwner++;}
+    public int getCountAddOwner(){return addOwner;}
+    public int getCountNoAddOwner(){return noAddOwner;}
 
 }

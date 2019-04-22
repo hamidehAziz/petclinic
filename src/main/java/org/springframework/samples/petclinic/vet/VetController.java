@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import org.springframework.samples.petclinic.system.toggles.Toggles;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +36,8 @@ class VetController {
     private final VetRepository vets;
     private int vetList = 0;
     private int vetListInsurance = 0;
+    private Logger logger = LogManager.getLogger("VetController");
+
 
     public VetController(VetRepository clinicService) {
         this.vets = clinicService;
@@ -45,10 +50,16 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         model.put("vets", vets);
-        if(VetToggles.insuranceRequired == true)
-        {return "vets/vetListInsurance";}
+        if(Toggles.insuranceRequired == true)
+        {
+            logger.info("Insurance is shown");
+            return "vets/vetListInsurance";
+        }
         else
-        {return "vets/vetList";}
+        {
+            logger.info("Insurance is not shown");
+            return "vets/vetList";
+        }
     }
 
     @GetMapping({ "/vets" })
@@ -86,6 +97,11 @@ class VetController {
 
     }
 
+    public void loggingAccess(){
+        logger.info("Page with insurance accessed: "+ vetListInsurance);
+        logger.info("Page with no insurance accessed: "+ vetList);
+
+    }
 
     public void countvetList(){vetList++;}
     public void countVetListInsurance(){vetListInsurance++;}
